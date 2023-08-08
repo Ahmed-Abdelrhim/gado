@@ -1,0 +1,1 @@
+<a class="reset_password" href="{{ route('front.forget_password.verify_phone') }}">{{ __('messages.forg') }}</a>
