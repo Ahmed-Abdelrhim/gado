@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\front\dealer\auth\DealerAuthController;
 
 Route::group(['middleware' => ['web','dealer']], function() {
 
@@ -11,11 +12,14 @@ Route::group(['middleware' => ['web']], function() {
     /************  REGISTER  ***********/
 
     # verify send code
-    Route::post('dealer/verify-send-code','front\dealer\auth\DealerAuthController@VerifySendCode')->name('dealer.verify_send_code');
+    // Route::post('dealer/verify-send-code','front\dealer\auth\DealerAuthController@VerifySendCode')->name('dealer.verify_send_code');
+    Route::post('dealer/verify-send-code',[DealerAuthController::class,'VerifySendCode'])->name('dealer.verify_send_code');
     # register
-    Route::get('dealer/register','front\dealer\auth\DealerAuthController@Register')->name('dealer.register');
+    // Route::get('dealer/register','front\dealer\auth\DealerAuthController@Register')->name('dealer.register');
+    Route::get('dealer/register',[DealerAuthController::class,'Register'])->name('dealer.register');
     # store dealer
-    Route::post('dealer/store/dealer','front\dealer\auth\DealerAuthController@StoreDealer')->name('dealer.store_dealer');
+    // Route::post('dealer/store/dealer','front\dealer\auth\DealerAuthController@StoreDealer')->name('dealer.store_dealer');
+    Route::post('dealer/store/dealer',[DealerAuthController::class,'StoreDealer'])->name('dealer.store_dealer');
 
     /************  LOGIN  ***********/
 

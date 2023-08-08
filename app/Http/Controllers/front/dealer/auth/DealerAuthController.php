@@ -101,6 +101,8 @@ class DealerAuthController extends Controller
     # store customer
     public function StoreDealer(Request $request)
     {
+        return $request->token;
+        return $customer = Dealer::query()->where('remember_token',$request->token)->first();
         $this->validate($request,[
             'name'     => 'required|min:5|max:50',
             'email'    => 'required|min:5|email|max:190|unique:dealers,email',
@@ -108,7 +110,7 @@ class DealerAuthController extends Controller
             'token'    => 'required',
         ]);
 
-        $customer = Dealer::where('remember_token',$request->token)->first();
+        return $customer = Dealer::query()->where('remember_token',$request->token)->first();
         if(!$customer)
         {
             return $this->SomethingWentWrong();

@@ -358,8 +358,6 @@ class HomeController extends Controller
 
     public function deletecart(Request $request)
     {
-
-
         $Cart = Cart::with('Order')->where('id', $request->id)->latest()->first();
         // $Cart->count =  $request->count ;
 
@@ -379,11 +377,8 @@ class HomeController extends Controller
         $total = $order->total - $setting->tax_rate;
         if ($datas == '0') {
             $order->delete();
-
         }
-
         return response()->json(['datas' => $order->total, 'total' => $total, 'cat_count' => $datas]);
-
     }
 
     public function copon(Request $request)
