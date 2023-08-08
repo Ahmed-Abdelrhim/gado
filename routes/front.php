@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\front\AuthController;
-Route::group(['middleware' => ['web']], function () {
 
+Route::get('login', [AuthController::class,'Login'])->name('front.login');
+Route::group(['middleware' => ['web']], function () {
     /******** HOME **********/
 
     //    Route::get('/home/{id}','front\HomeController@Home')->name('front.home');
     Route::get('/home/{id}', [HomeController::class,'Home'])->name('front.home');
     // Route::get('login', 'front\AuthController@Login')->name('front.login');
-    Route::get('login', [AuthController::class,'Login'])->name('front.login');
 
     Route::get('lang/change', 'front\HomeController@change')->name('changeLang');
     /******** MORE **********/
@@ -24,14 +24,26 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('get-search-in-nav/{div?}', 'front\HomeController@ser')->name('front_nav_search');
     Route::post('add-emails', 'front\HomeController@email')->name('front_add_email');
     /******** cart **********/
-    Route::post('add-order-to-cart', 'front\HomeController@order')->name('front_add_order');
-    Route::get('cart-home/{div?}', 'front\HomeController@cart')->name('front_home_cart');
-    Route::post('delete-cart', 'front\HomeController@deletecart')->name('front_delete_cart');
-    Route::post('count-cart', 'front\HomeController@countcart')->name('front_count_cart');
-    Route::post('copon-cart', 'front\HomeController@copon')->name('front_copon_cart');
-    Route::get('order-info/{div?}/{id}', 'front\HomeController@detialsorder')->name('front_order_info');
-    Route::post('info-store-order', 'front\HomeController@storeinfo')->name('front_store_info');
-    Route::get('order-info', 'front\HomeController@detialstow')->name('front_pay_way');
+    // Route::post('add-order-to-cart', 'front\HomeController@order')->name('front_add_order');
+    // Route::get('cart-home/{div?}', 'front\HomeController@cart')->name('front_home_cart');
+    // Route::post('delete-cart', 'front\HomeController@deletecart')->name('front_delete_cart');
+    Route::get('add-order-to-cart', [HomeController::class,'order'])->name('front_add_order');
+    Route::get('cart-home/{div?}',  [HomeController::class,'cart'])->name('front_home_cart');
+    Route::get('delete-cart',  [HomeController::class,'deletecart'])->name('front_delete_cart');
+
+
+    Route::post('count-cart', [HomeController::class,'countcart'])->name('front_count_cart');
+    Route::post('copon-cart', [HomeController::class,'copon'])->name('front_copon_cart');
+
+
+
+    Route::get('order-info/{div?}/{id}', [HomeController::class,'detialsorder'])->name('front_order_info');
+    Route::post('info-store-order', [HomeController::class,'storeinfo'])->name('front_store_info');
+    Route::get('order-info', [HomeController::class,'detialstow'])->name('front_pay_way');
+
+
+
+
     Route::post('finish-store-order', 'front\HomeController@finnishinfo')->name('front_finish_store_info');
     Route::get('order-info-finish/{div?}', 'front\HomeController@detialsthree')->name('front_finnish_order');
     Route::get('my-orders/{div?}', 'front\HomeController@myorders')->name('front_my_orders');

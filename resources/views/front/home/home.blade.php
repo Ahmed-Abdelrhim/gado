@@ -12,10 +12,7 @@
     <!-- END:: INFO SITE SECTION -->
 
     <!-- START:: SECTION PRODUCTS -->
-    
-   
     @include('front.parts.products_section',[$data =  $paies ,$title = __("messages.best_seller")])
-    
     <!-- END:: SECTION PRODUCTS -->
     @if(!is_null($pans))
     @if($div == $pans->kind)
@@ -157,9 +154,5 @@
         // nothing found.. assume desktop
         return false;
     }
-
-
-
-
 </script>
 @endsection
