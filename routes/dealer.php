@@ -17,6 +17,7 @@ Route::group(['middleware' => ['web']], function() {
     # register
     // Route::get('dealer/register','front\dealer\auth\DealerAuthController@Register')->name('dealer.register');
     Route::get('dealer/register',[DealerAuthController::class,'Register'])->name('dealer.register');
+    // dealer/register?phone=01152067271
     # store dealer
     // Route::post('dealer/store/dealer','front\dealer\auth\DealerAuthController@StoreDealer')->name('dealer.store_dealer');
     Route::post('dealer/store/dealer',[DealerAuthController::class,'StoreDealer'])->name('dealer.store_dealer');
