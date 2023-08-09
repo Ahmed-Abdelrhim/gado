@@ -13,7 +13,7 @@ class CustomersController extends Controller
     # index
     public function Index()
     {
-        $data = Customer::where('phone','!=','null')->latest()->get();
+        $data = Customer::query()->where('phone','!=','null')->latest()->get();
         return view('customers.customers',compact('data'));
     }
 

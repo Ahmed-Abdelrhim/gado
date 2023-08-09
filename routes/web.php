@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\CustomersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -181,7 +183,8 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 
 	# customers
 	Route::get('customers',[
-		'uses'=>'CustomersController@Index',
+		 'uses'=>'CustomersController@Index',
+		 // 'uses' => [CustomersController::class,'Index'],
 		'as'  =>'customers',
 		'icon' =>'<i class="fas fa-user"></i>',
 		'subIcon' =>'<i class="fas fa-user"></i>',

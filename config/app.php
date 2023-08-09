@@ -176,6 +176,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
     ],
 
     /*
@@ -229,6 +231,7 @@ return [
         'Date' => Illuminate\Support\Facades\Date::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Input' => Illuminate\Support\Facades\Input::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 
