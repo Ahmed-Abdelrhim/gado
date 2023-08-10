@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Dealer;
 use App\Order;
-use Session;
-use Auth;
+//use Session;
+use Illuminate\Support\Facades\Session;
+//use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class DealerAuthController extends Controller
 {
@@ -31,20 +33,19 @@ class DealerAuthController extends Controller
         ]);
         $phone = $request->phone;
         $remember = $request->has('remember') ? true : false; 
-        $customer = Dealer::where('phone',$request->phone)->first();
-        if($customer){
-            if($customer->active != '1'){
-                Session::flash('danger',' يتم مراجعة حسابك!  سيتم التواصل معك خلال 48 ساعة');
+        $customer = Dealer::query()->where('phone',$request->phone)->first();
+        if($customer) {
+            if($customer->active != '1') {
+                // Session::flash('danger',' يتم مراجعة حسابك!  سيتم التواصل معك خلال 48 ساعة');
+                Session::flash('danger',' هذا الحساب قيد المراجعة');
                 return back();
-            }else{
-                if(auth()->guard('dealer')->attempt(['phone' => $phone, 'password' => $request->password],$remember))
-                {
-                    $customer = Dealer::where('phone',$request->phone)->first();
+            } else {
+                if(auth()->guard('dealer')->attempt(['phone' => $phone, 'password' => $request->password],$remember)) {
+                    $customer = Dealer::query()->where('phone',$request->phone)->first();
                     $customer->ip               = $request->ip();
                     $customer->save();
                     return redirect('/');
-                }else
-                {
+                } else {
                    Session::flash('danger','يوجد خطأ في بيانات الدخول ! ');
                    return back();
                 }
@@ -54,8 +55,6 @@ class DealerAuthController extends Controller
             Session::flash('danger','يوجد خطأ في بيانات الدخول ! ');
             return back();
         }
-       
-   
     }
 
     # verify send code

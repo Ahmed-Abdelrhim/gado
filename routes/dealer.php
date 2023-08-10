@@ -25,7 +25,10 @@ Route::group(['middleware' => ['web']], function() {
     /************  LOGIN  ***********/
 
     # check auth
-    Route::post('dealer/check/auth','front\dealer\auth\DealerAuthController@CheckAuth')->name('dealer.check_auth');
+    // Route::post('dealer/check/auth','front\dealer\auth\DealerAuthController@CheckAuth')->name('dealer.check_auth');
+    Route::post('dealer/check/auth',[DealerAuthController::class,'CheckAuth'])->name('dealer.check_auth');
+
+
     # logout
     Route::get('dealer/logout','front\dealer\auth\DealerAuthController@Logout')->name('dealer.logout');
 
