@@ -1,5 +1,4 @@
 @extends('front.layout.app')
-
 @section('content')
     <main>
         <!-- START:: BREADCRUMBS -->

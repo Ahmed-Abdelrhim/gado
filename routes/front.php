@@ -27,9 +27,11 @@ Route::group(['middleware' => ['web']], function () {
     // Route::post('add-order-to-cart', 'front\HomeController@order')->name('front_add_order');
     // Route::get('cart-home/{div?}', 'front\HomeController@cart')->name('front_home_cart');
     // Route::post('delete-cart', 'front\HomeController@deletecart')->name('front_delete_cart');
-    Route::get('add-order-to-cart', [HomeController::class,'order'])->name('front_add_order');
+
+
+    Route::post('add-order-to-cart', [HomeController::class,'order'])->name('front_add_order');
     Route::get('cart-home/{div?}',  [HomeController::class,'cart'])->name('front_home_cart');
-    Route::get('delete-cart',  [HomeController::class,'deletecart'])->name('front_delete_cart');
+    Route::post('delete-cart',  [HomeController::class,'deletecart'])->name('front_delete_cart');
 
 
     Route::post('count-cart', [HomeController::class,'countcart'])->name('front_count_cart');
