@@ -23,11 +23,11 @@
 
 @section('content')
 
-   
-    <!-- START:: INFO SITE SECTION -->
-    
 
-    
+    <!-- START:: INFO SITE SECTION -->
+
+
+
     <main>
         <!-- START:: BREADCRUMBS -->
         <div class="breadcrumbs">
@@ -51,7 +51,7 @@
         <div class="content_single_page">
             <div class="container mt-5">
                 <div class="row">
-              
+
                     <div class="col-md-8">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                             {{-- أدخل بيانات جديدة --}}
@@ -61,11 +61,11 @@
                             </li>
                             {{-- إختار من بياناتك القديمة --}}
                             <li class="nav-item" role="presentation">
-                              
+
                             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">{{ __('messages.enter_data_old') }}</button>
                             </li>
                         </ul>
-                      
+
                         <div class="tab-content" id="myTabContent">
 
                             <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -91,7 +91,7 @@
                                             <label for="address"  class="form-label"> {{ __('messages.address') }} <span>*</span></label>
                                             <input type="text" value="" required name="address" class="form-control" id="address"
                                                 placeholder=" {{ __('messages.address') }}">
-                                            
+
                                         </div>
                                         <div class="col-md-12 mb-3">
                                             <label for="email_code" class="form-label"> {{ __('messages.Postal_code') }}</label>
@@ -108,7 +108,7 @@
                                             <input type="email"  name="email"   value="" class="form-control" id="email" value=""
                                                 placeholder="{{ __('messages.email') }}">
                                         </div>
-                                        
+
                                         <div class="col-md-12 mb-3">
                                             <label for="desc" class="form-label"> {{ __('messages.other_info') }}</label>
                                             <textarea class="form-control" name="desc" id="desc" rows="5"
@@ -121,18 +121,18 @@
                                                 @foreach($governorates as $governorate)
                                                 <option value="{{$governorate->id}}" data-shipping="{{$governorate->shipping_fee}}">{{$governorate->name_ar}} </option>
                                                 @endforeach
-                                                
+
                                             </select>
-                                            
+
                                         </div>
                                         <div class="col-md-12">
                                             <button class="btn-animation-2"  type="submit">
-                                                
-                                           
+
+
                                           {{ __('messages.Confirm_data') }}
                                             </button>
                                         </div>
-                                        
+
                                     </form>
                                 </div>
                             </div>
@@ -160,7 +160,7 @@
                                                                         <p class="card-text">المحافظه : {{$inv->governorate_id}}</p>
                                                                         <button type="button"
                                                                         class="btn btn-info btn-sm edit"
-                                                                       
+
                                                                         data-id    = "{{$inv->id}}"
                                                                         data-name_first= "{{$inv->name_first}}"
                                                                         data-name_last = "{{$inv->name_last}}"
@@ -174,21 +174,21 @@
                                                                         <button type="button" data-id = "{{$inv->id}}" class="btn btn-danger btn-sm delet"> <i class="fas fa-trash"></i></button>
                                                                     </div>
                                                                 </div>
-                                                               
-                                                            @endforeach  
-                                                        @endif  
+
+                                                            @endforeach
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                  @if(!empty($infords) && count($infords) != 0)
                                                 <button class="btn-animation-2"  type="submit">
-                                                    
+
                                                 {{ __('messages.Confirm_data') }}
                                                 </button>
                                                 @else
                                                  <p class="btn-animation-2"  >
-                                                    لا يوجد بيانات 
+                                                    لا يوجد بيانات
                                                 <!--{{ __('messages.Confirm_data') }}-->
                                                 </p>
                                                 @endif
@@ -206,8 +206,8 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                 <h4 class="modal-title">تعديل بيانات : <span class="item_name"></span></h4>
-                               
-                                   
+
+
                                 </div>
                                 <div class="modal-body">
                                 <form class="form-group-custom row" action="{{route('front_store_info')}}" method="post" enctype="multipart/form-data">
@@ -230,7 +230,7 @@
                                                     <label for="address"  class="form-label"  style="margin-top: 10px"> {{ __('messages.address') }} <span>*</span></label>
                                                     <input type="text" required name="address" class="form-control" id="address"
                                                         placeholder=" {{ __('messages.address') }}">
-                                                    
+
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <label for="email_code" class="form-label"  style="margin-top: 10px"> {{ __('messages.Postal_code') }} <span>*</span></label>
@@ -259,14 +259,14 @@
                                                         @foreach($governorates as $governorate)
                                                         <option value="{{$governorate->id}}" data-shipping="{{$governorate->shipping_fee}}">{{$governorate->name_ar}} </option>
                                                         @endforeach
-                                                        
+
                                                     </select>
-                                            
+
                                                 </div>
-                                                
+
                                             </div>
-                                        </div>  
-                                       
+                                        </div>
+
                                         <button type="submit" id="update" style="display: none;"></button>
                                 </form>
                                 </div>
@@ -294,7 +294,7 @@
                                         <div class="content_item">
                                             <!-- START:: HEAD  -->
                                             <div class="head_details">
-                                               
+
                                                 <h4><a href="#">{{ $val->Product->name_ar }}</a>
                                                 </h4>
                                                 <div class="rate_part">
@@ -352,7 +352,7 @@
                                                         <span class="new_price">{{ $val->Product->price_discount }} EGP</span>
                                                         <span class="old_price">{{ $val->Product->price }} EGP</span>
                                                     @endif
-                                                      
+
                                                     </div>
                                                     <!-- START:: BTNS ( ADD CART & FAV ) QUANTITY -->
                                                     <div class="btn_quantity_cart_fav d-flex align-items-center">
@@ -360,9 +360,9 @@
                                                             <span>{{ __('messages.Quantity') }} : </span>
                                                         </div>
                                                         <div class="btn_min_max">
-                                                            
+
                                                             <input type="number" id="count"  data-price="{{ $val->price }}" data-id="{{ $val->id }}" name="count" class="quantity{{$val->id}} form-control text-center" value="{{ $val->count }}" />
-                                                            
+
                                                         </div>
                                                     </div>
 
@@ -409,7 +409,7 @@
                                         {{ $order->total - $setting->tax_rate}} @lang('messages.currency')
                                     </p>
                                 </h6>
-                                
+
                             </div>
                         </div>
                         <!-- END:: ORDER DETAILS -->
@@ -426,15 +426,15 @@
 
 
 @section('scripts')
-    
+
 <script>
 
-    
+
 $('.save').on('click',function(){
         $('#submit').click();
     })
 
-  
+
 
 
     //edit section
@@ -447,7 +447,7 @@ $('.save').on('click',function(){
         var phone         = $(this).data('phone')
         var email         = $(this).data('email')
         var desc          = $(this).data('desc')
-       
+
 
         $("input[name='inf_id']").val(inf_id)
         $("input[name='name_first']").val(name_first)
@@ -457,10 +457,10 @@ $('.save').on('click',function(){
         $("input[name='phone']").val(phone)
         $("input[name='email']").val(email)
         $("textarea[name='desc']").html(desc)
-    
-      
 
-       
+
+
+
     });
 
     // update section
@@ -469,9 +469,9 @@ $('.save').on('click',function(){
     })
 
 $(document).ready(function () {
-    
-    //change shipping 
-    
+
+    //change shipping
+
     $('#governorate').on('change', function() {
         var shipping = $(this).find(':selected').data('shipping');
         var order_total = "{{$order->total}}";
@@ -518,11 +518,11 @@ function makeActive(element) {
         var $ele = $(this).parent();
         var data = {
             id : $(this).data("id"),
-        
+
 		    _token     : $("input[name='_token']").val()
 	    }
 
-		
+
 		$.ajax(
 		{
 			url: "{{route('front_delete_cart')}}",
@@ -534,9 +534,9 @@ function makeActive(element) {
                 $(".resc").html(s.total + "{{ trans('messages.currency') }}");
 			}
 		});
-	   
+
 	});
-   
+
     @foreach($order->Carts as $cart)
             $(".quantity{{$cart->id}}").change(updateCart);
     @endforeach
@@ -546,11 +546,11 @@ function makeActive(element) {
         var data = {
             id : $(this).data("id"),
             count : $(this).val(),
-        
+
 		    _token     : $("input[name='_token']").val()
 	    }
 
-		
+
 		$.ajax(
 		{
 			url: "{{route('front_count_cart')}}",
@@ -561,11 +561,11 @@ function makeActive(element) {
                 $(".resc").html(s.total + "{{ trans('messages.currency') }}");
 			}
 		});
-	   
+
 	};
 
     $(".infos").change(function(){
-           
+
             $("input[name='address']").val($(this).val());
         });
 
@@ -585,8 +585,8 @@ function makeActive(element) {
           $ele.fadeOut().remove();
         }
     });
-   
+
 });
-	
+
 </script>
 @endsection

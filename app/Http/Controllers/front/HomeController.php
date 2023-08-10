@@ -544,9 +544,7 @@ class HomeController extends Controller
     # det1
     public function detialsorder($div, $id)
     {
-
-
-        $order = Order::where('id', $id)->with('Carts')->latest()->first();
+        $order = Order::query()->where('id', $id)->with('Carts')->latest()->first();
 
         if ($order->total < 200) {
             return redirect()->back()->with('msg', 'الحد الادني للطلب 200 !');

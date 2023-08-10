@@ -1,18 +1,12 @@
 @extends('front.layout.app')
-
 @section('style')
-
-
-
-      
 @endsection
+
+
+
+
 @section('content')
-
-   
     <!-- START:: INFO SITE SECTION -->
-    
-
-    
     <main>
         <!-- START:: BREADCRUMBS -->
         <div class="breadcrumbs">
@@ -55,10 +49,10 @@
                                             <span>{{ __('messages.credit_card_desc') }}</span>
                                         </div>
                                     </label>
-                                 
+
                                 </div>
 
-                                <div class="col-md-12"> 
+                                <div class="col-md-12">
                                     <label class="form-check">
                                         <input class="form-check-input" value="1" type="radio" name="type">
                                         <img src="{{asset('dist/front/assets/images/icons/money.svg')}}" width="" height="" />
@@ -85,7 +79,7 @@
                             <form action="#">
                                 <!-- START:: SINGLE ITEM -->
                                 <div class="single_item_shop">
-                                  
+
                                     <div class="itemFlex">
                                         <div class="image_item">
                                             <img src="{{ $val->Product->card_image }}" alt="" width="" height="">
@@ -93,7 +87,7 @@
                                         <div class="content_item">
                                             <!-- START:: HEAD  -->
                                             <div class="head_details">
-                                               
+
                                                 <h4><a href="#">{{ $val->Product->name_ar }}</a>
                                                 </h4>
                                                 <div class="rate_part">
@@ -151,7 +145,7 @@
                                                         <span class="new_price">{{ $val->Product->price_discount }} EGP</span>
                                                         <span class="old_price">{{ $val->Product->price }} EGP</span>
                                                     @endif
-                                                      
+
                                                     </div>
                                                     <!-- START:: BTNS ( ADD CART & FAV ) QUANTITY -->
                                                     <div class="btn_quantity_cart_fav d-flex align-items-center">
@@ -159,9 +153,9 @@
                                                             <span>{{ __('messages.Quantity') }} : </span>
                                                         </div>
                                                         <div class="btn_min_max">
-                                                            
+
                                                             <input type="number" id="count" readonly  data-price="{{ $val->price }}" data-id="{{ $val->id }}" name="count" class="quantity{{$val->id}} form-control text-center" value="{{ $val->count }}" />
-                                                            
+
                                                         </div>
                                                     </div>
 
@@ -207,29 +201,29 @@
                                         placeholder="برجاء ادخال الكبون ">
                                         <button style="width: 20%; margin-right: 0;height: 40px; "  data-id="{{$order->id}}" type="submit" class="btn-animation-2 copon">
                                         <i class="fas fa-check"></i>  </button>
-                                     
-                                       
+
+
                                     </li>
                                     <span class="brf"></span>
                                     <span class="capp"></span>
                                     <li>
-                                   
+
                                     <p class="coop"></p>
 
                                     </li>
                                 </ul>
-                                <h6> 
+                                <h6>
                                     <span> {{ __('messages.grand_total') }}</span>
                                     <p class="resc">{{ ($order->total + ( \App\Governorate::find($order->Order_info()->first()->governorate_id)->shipping_fee)) - $setting->tax_rate}}  @lang('messages.currency') </p>
-                                    
+
                                 </h6>
-                                
+
                             </div>
                         </div>
                         <!-- END:: ORDER DETAILS -->
                     </div>
 
-                  
+
                 </div>
 
             </div>
@@ -242,13 +236,13 @@
 
 
 @section('scripts')
-    
+
 
 
 <script>
       $(document).on('click','.payk', function(){
         window.location.href="{{url('create-checkout-session?id='. $order->id)}}";
-		
+
         $('.bttttt').fadeOut().remove();
 	});
 
@@ -257,11 +251,11 @@
         var data = {
             id : $(this).data("id"),
             copon : $("input[name='copon']").val(),
-        
+
 		    _token     : $("input[name='_token']").val()
 	    }
 
-		
+
 		$.ajax(
 		{
 			url: "{{route('front_copon_cart')}}",
@@ -273,22 +267,22 @@
                 $(".brf").html(' ');
                 $(".brf").html(s.copons );
                 $(".rattt").html(s.capp);
-               
+
                 $(".resc").html(s.total + "{{ trans('messages.currency') }}");
 			}
 		});
-	   
+
 	});
 
     $(document).on('click','.del', function(){
         var $ele = $(this).parent();
         var data = {
             id : $(this).data("id"),
-        
+
 		    _token     : $("input[name='_token']").val()
 	    }
 
-		
+
 		$.ajax(
 		{
 			url: "{{route('front_delete_cart')}}",
@@ -300,9 +294,9 @@
                 $(".resc").html(s.total + "{{ trans('messages.currency') }}");
 			}
 		});
-	   
+
 	});
-   
+
     @foreach($order->Carts as $cart)
             $(".quantity{{$cart->id}}").change(updateCart);
     @endforeach
@@ -312,11 +306,11 @@
         var data = {
             id : $(this).data("id"),
             count : $(this).val(),
-        
+
 		    _token     : $("input[name='_token']").val()
 	    }
 
-		
+
 		$.ajax(
 		{
 			url: "{{route('front_count_cart')}}",
@@ -327,9 +321,9 @@
                 $(".resc").html(s.total + "{{ trans('messages.currency') }}");
 			}
 		});
-	   
+
 	};
 
-	
+
 </script>
 @endsection
