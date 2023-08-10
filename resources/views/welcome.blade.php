@@ -48,6 +48,7 @@
 </head>
 
 <body>
+<!--
 <?php $string = rand(1,3);?>
     @if($string == 1)
         <section class="page_intro">
@@ -77,72 +78,101 @@
                 </p>
             </div>
         </section>
-    @elseif($string == 2)  
-    <section class="page_intro_2">
-        <div class="head_page_intro_2">
-            <img src="{{asset('dist/front/assets/images/logo/w-logo.svg')}}" alt="" height="" width="">
-            <h2>برجاء تحديد المتجر</h2>
-        </div>
-        <div class="container">
-            <div class="body_page_intro_2">
-                <div class="right_page">
+    @elseif($string == 2)
+        <section class="page_intro_2">
+            <div class="head_page_intro_2">
+                <img src="{{asset('dist/front/assets/images/logo/w-logo.svg')}}" alt="" height="" width="">
+                <h2>برجاء تحديد المتجر</h2>
+            </div>
+            <div class="container">
+                <div class="body_page_intro_2">
+                    <div class="right_page">
+                        <a href="{{route('front.home','2')}}">
+                            <img src="{{asset('dist/front/assets/images/icons/v-4.svg')}}" alt="" height="" width="">
+                            <h3>العدد والأدوات اليدوية</h3>
+                            <p>اكبر متجر للادوات اليدوية , حيث قمنا بتوفير كافة الأدوات اليدوية في مكان واحد</p>
+                        </a>
+                    </div>
+                    <div class="left_page">
+                        <a href="{{route('front.home','1')}}">
+                            <img src="{{asset('dist/front/assets/images/icons/v-3.svg')}}" alt="" height="" width="">
+                            <h3>متجر التكييفات</h3>
+                            <p>اكبر متجر للتكييفات ، حيث قمنا بتوفير كافه انواع التكييفات في مكان واحد</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer_page_intro_2">
+                <p>
+                    جميع الحقوق محفوظة لـ
+                    <a href="#">gado group</a>
+                </p>
+            </div>
+        </section>
+    @elseif($string == 3)
+        <section class="page_intro_2 page_intro_blue">
+            <div class="head_page_intro_2">
+                <img src="{{asset('dist/front/assets/images/logo/w-logo.svg')}}" alt="" height="" width="">
+                <h2>برجاء تحديد المتجر</h2>
+            </div>
+            <div class="container">
+                <div class="body_page_intro_2">
+                    <div class="right_page">
                     <a href="{{route('front.home','2')}}">
-                        <img src="{{asset('dist/front/assets/images/icons/v-4.svg')}}" alt="" height="" width="">
-                        <h3>العدد والأدوات اليدوية</h3>
-                        <p>اكبر متجر للادوات اليدوية , حيث قمنا بتوفير كافة الأدوات اليدوية في مكان واحد</p>
-                    </a>
-                </div>
-                <div class="left_page">
+                            <img src="{{asset('dist/front/assets/images/icons/v-4.svg')}}" alt="" height="" width="">
+                            <h3>العدد والأدوات اليدوية</h3>
+                            <p>اكبر متجر للادوات الهندسية , حيث قمنا بتوفير كافة الأدوات الهندسية في مكان واحد</p>
+                        </a>
+                    </div>
+                    <div class="left_page">
                     <a href="{{route('front.home','1')}}">
-                        <img src="{{asset('dist/front/assets/images/icons/v-3.svg')}}" alt="" height="" width="">
-                        <h3>متجر التكييفات</h3>
-                        <p>اكبر متجر للتكييفات ، حيث قمنا بتوفير كافه انواع التكييفات في مكان واحد</p>
-                    </a>
+                            <img src="{{asset('dist/front/assets/images/icons/v-3-1.svg')}}" alt="" height="" width="">
+                            <h3>متجر التكييفات</h3>
+                            <p>اكبر متجر للتكييفات ، حيث قمنا بتوفير كافه انواع التكييفات في مكان واحد</p>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="footer_page_intro_2">
-            <p>
-                جميع الحقوق محفوظة لـ
-                <a href="#">gado group</a>
-            </p>
-        </div>
-    </section>  
-
-    @elseif($string == 3)  
-    <section class="page_intro_2 page_intro_blue">
-        <div class="head_page_intro_2">
-            <img src="{{asset('dist/front/assets/images/logo/w-logo.svg')}}" alt="" height="" width="">
-            <h2>برجاء تحديد المتجر</h2>
-        </div>
-        <div class="container">
-            <div class="body_page_intro_2">
-                <div class="right_page">
-                <a href="{{route('front.home','2')}}">
-                        <img src="{{asset('dist/front/assets/images/icons/v-4.svg')}}" alt="" height="" width="">
-                        <h3>العدد والأدوات اليدوية</h3>
-                        <p>اكبر متجر للادوات الهندسية , حيث قمنا بتوفير كافة الأدوات الهندسية في مكان واحد</p>
-                    </a>
-                </div>
-                <div class="left_page">
-                <a href="{{route('front.home','1')}}">
-                        <img src="{{asset('dist/front/assets/images/icons/v-3-1.svg')}}" alt="" height="" width="">
-                        <h3>متجر التكييفات</h3>
-                        <p>اكبر متجر للتكييفات ، حيث قمنا بتوفير كافه انواع التكييفات في مكان واحد</p>
-                    </a>
-                </div>
+            <div class="footer_page_intro_2">
+                <p>
+                    جميع الحقوق محفوظة لـ
+                    <a href="#">gado group</a>
+                </p>
             </div>
-        </div>
-
-        <div class="footer_page_intro_2">
-            <p>
-                جميع الحقوق محفوظة لـ
-                <a href="#">gado group</a>
-            </p>
-        </div>
-    </section>
+        </section>
     @endif
+
+-->
+
+<section class="page_intro">
+    <div class="head_page_intro">
+        <img src="{{asset('dist/front/assets/images/logo/w-logo.svg')}}" alt="" height="" width="">
+    </div>
+
+    <div class="body_page_intro">
+        <div class="right_page">
+            <a href="{{route('front.home','2')}}">
+                <img src="{{asset('dist/front/assets/images/icons/v-1.svg')}}" alt="" height="" width="">
+                <h2>العدد والأدوات اليدوية</h2>
+            </a>
+        </div>
+        <div class="left_page">
+            <a href="{{route('front.home','1')}}">
+                <img src="{{asset('dist/front/assets/images/icons/v-2.svg')}}" alt="" height="" width="">
+                <h2>متجر التكييفات</h2>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer_page_intro">
+        <p>
+            جميع الحقوق محفوظة لـ
+            <a href="#">gado group</a>
+        </p>
+    </div>
+</section>
    
 
     <script src="{{asset('dist/front/assets/js/jquery/jquery-3.4.1.min.js')}}"></script>

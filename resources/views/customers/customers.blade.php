@@ -25,8 +25,8 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 {{-- <td>{{$value->avatar}}</td> --}}
-                                <td><img alt="Avatar" class="table-avatar"
-                                         src="{{asset('uploads/customers/avatar/'.$value->avatar)}}"
+                                <td>
+                                    <img alt="Avatar" class="table-avatar" src="{{asset('uploads/customers/avatar/'.$value->avatar)}}"
                                          style="border-radius: 50px;width:50px;"></td>
                                 <td>{{$value->name}}</td>
                                 <td>{{$value->phone}}</td>
