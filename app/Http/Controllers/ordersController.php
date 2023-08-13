@@ -22,23 +22,25 @@ class ordersController extends Controller
     # orders page
     public function orders()
     {
-    	$Orders  = Order::where('pay_type','!=',null)->latest()->get();
-
+        $Orders = Order::query()
+            ->where('pay_type', '!=', null)
+            ->with([
+                'OrderProducts' => function ($query) {
+                    $query->select('id', 'product_id', 'order_id');
+                },
+                'OrderProducts.Product' => function ($query) {
+                    $query->select('id', 'name_en', 'name_ar');
+                }
+            ])
+            ->latest()
+            ->get();
     	return view('orders.orders',compact('Orders'));
     }
-
-   
-
     # edit
     public function Edit($id)
     {
-
-
-
-        $ord = Order::where('id',$id)->with('OrderProducts.Product','Order_info')->latest()->firstOrFail();
-        
-
-        $setting = Setting::first();
+        $ord = Order::query()->where('id',$id)->with('OrderProducts.Product','Order_info')->latest()->firstOrFail();
+        $setting = Setting::query()->first();
         return view('orders.edit_order',compact('ord','setting'));
     }
 
@@ -100,6 +102,10 @@ class ordersController extends Controller
         Session::flash('success','تم حذف الطلبات');
         return back();
     }
- 
-
 }
+//    	return $Orders  = Order::query()
+//            ->where('pay_type','!=',null)
+//            ->with('OrderProducts.Product:id,name_ar,name_en')
+//            //:id,name_ar,name_en
+//            ->latest()
+//            ->get();
