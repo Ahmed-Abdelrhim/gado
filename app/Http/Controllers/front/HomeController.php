@@ -527,15 +527,9 @@ class HomeController extends Controller
             $total = $order->total - $setting->tax_rate;
             if ($order->total == '0') {
                 $order->delete();
-
             }
-
-
             return response()->json(['datas' => $order->total, 'total' => $total, 'cat_count' => $datas]);
-
         }
-
-
     }
 
 

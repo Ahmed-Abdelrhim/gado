@@ -49,7 +49,7 @@
             border-radius: 0 4px 4px 0;
         }
 
-        .p-error-msg{
+        .p-error-msg {
             color: #F44336;
             font-size: 14px;
         }
@@ -118,7 +118,7 @@
                                                 <div class="content_item">
                                                     <!-- START:: HEAD  -->
                                                     <div class="head_details">
-
+                                                        <span style="color:red;font-size: 13px;"> متوفر : {{$val->Product->stock}} قطع  </span>
                                                         <h4><a href="#"> @if(session()->get('locale') == "en")
                                                                     {{$val->Product->name_en}}
                                                                 @else
@@ -202,7 +202,8 @@
 
 
                                                         </div>
-                                                        <p id="error-quantity-not-found{{ $val->id }}" class="p-error-msg"></p>
+                                                        <p id="error-quantity-not-found{{ $val->id }}"
+                                                           class="p-error-msg"></p>
                                                     </div>
 
                                                 </div>
@@ -230,10 +231,10 @@
                                             <p class="toot">{{ $order->total }}  @lang('messages.currency')</p>
                                         </li>
                                         <!--<li>-->
-                                    <!--    <span>{{ __('messages.Shipping') }}</span>-->
-                                    <!--    {{ $setting->dilivary }} جنيه-->
+                                        <!--    <span>{{ __('messages.Shipping') }}</span>-->
+                                        <!--    {{ $setting->dilivary }} جنيه-->
                                         <!--</li>-->
-                                        
+
                                         <li>
                                             <span>{{ __('messages.Discount') }}  </span>
                                             <span class="rattt">  </span>
@@ -241,7 +242,7 @@
                                     </ul>
                                     <h6>
                                         <span>  {{ __('messages.grand_total') }}</span>
-                                    <!--<p class="resc">{{ ($order->total + $setting->dilivary) - $setting->tax_rate}} جنيه </p>-->
+                                        <!--<p class="resc">{{ ($order->total + $setting->dilivary) - $setting->tax_rate}} جنيه </p>-->
                                         <p class="resc">{{ $order->total  - $setting->tax_rate}} @lang('messages.currency') </p>
 
                                     </h6>
@@ -393,7 +394,11 @@
                                     $(".cart_num").html(s.cat_count);
                                     $(".quantity" + id).val(value);
                                     if (s.datas == '0') {
-                                        window.location.href = "{{ url('/') }}";
+                                        {{--  @php $url = \Illuminate\Support\Facades\Request::url(); @endphp   --}}
+                                        {{--if ({{ $url }} === 'cart-home/1') {--}}
+                                        {{--    window.location.href = "{{ url('/home/1') }}";--}}
+                                        {{--}--}}
+                                        window.location.href = "{{  url('/')}}";
                                     }
                                 }
                             });

@@ -36,17 +36,6 @@ class ordersController extends Controller
             ->latest()
             ->get();
         return view('orders.orders', ['Orders' => $Orders]);
-
-        //                [
-        //                'OrderProducts' => function ($query) {
-        //                    $query->select('id', 'product_id', 'order_id');
-        //                },
-
-        //                'OrderProducts.Product' => function ($query) {
-        //                    $query->select('id', 'name_en', 'name_ar');
-        //                }
-
-        //            ]
     }
 
     # edit
