@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CustomersController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\front\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,6 +41,8 @@ Route::get('/', function () {
 Route::get('maintenance', function (){
     return "Under Maintenance";
 });
+Route::get('admin/expired-products',[HomeController::class,'expiredProducts'])->name('expired.products');
+
 
 Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 
@@ -63,12 +65,6 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 		]
 	]);
 
-    Route::get('/expired-products',[
-        'uses'  =>'HomeController@expiredProducts',
-        'as'    =>'expiredProducts',
-        'icon'  =>'<i class="nav-icon fas fa-poll"></i>',
-        'title' =>'المنتجات المنتهية',
-    ]);
 
 	# store date
 	Route::get('store-date-sales',[
