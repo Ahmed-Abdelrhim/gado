@@ -16,6 +16,8 @@ class Product extends Model
         'categories_ids',
     ];
 
+
+
     public function getCardImageAttribute()
     {
         if(is_null($this->image))

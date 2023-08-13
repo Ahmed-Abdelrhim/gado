@@ -43,14 +43,17 @@
                                     @if(count($value->OrderProducts) > 1)
                                         @foreach($value->OrderProducts as $productKey => $product)
                                             @php $colors = array('#dc3545','#007bff','#28a745'); $random = array_rand($colors,1); @endphp
-                                            <span style="color: {{$colors[$random]}}">
+                                            <span style="color: {{$colors[ $random ]}}">
                                                 ( {{ $productKey + 1 }} )
-                                                {{ $product->product->name_ar }} </span>
+                                                {{ $product->product->name_ar }}
+                                            </span>
                                             <br/>
                                         @endforeach
                                     @else
                                         {{ $value->OrderProducts[0]->product->name_ar }}
                                     @endif
+
+
                                 </td>
 
                                 <td>
