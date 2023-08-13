@@ -63,6 +63,13 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 		]
 	]);
 
+    Route::get('/expired-products',[
+        'uses'  =>'HomeController@expiredProducts',
+        'as'    =>'expiredProducts',
+        'icon'  =>'<i class="nav-icon fas fa-poll"></i>',
+        'title' =>'المنتجات المنتهية',
+    ]);
+
 	# store date
 	Route::get('store-date-sales',[
 		'uses'=>'HomeController@Storedate',

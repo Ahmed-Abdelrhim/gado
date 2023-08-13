@@ -31,10 +31,13 @@ use DB;
 use Validator;
 use App\Governorate;
 use App\Services\HomeService;
+
 class HomeController extends Controller
 {
     use N_COUPONS;
+
     public $homeService;
+
     public function __construct(HomeService $homeService)
     {
         $this->homeService = $homeService;
@@ -56,7 +59,6 @@ class HomeController extends Controller
         $pannns = Pannar::query()->where('type', '1')->inRandomOrder()->take(2)->get();
 
 
-
         $paies = Product::query()->whereIn('id', $procs)->where('stock', '>', 0)->with('ProComments')
             ->inRandomOrder()->orderby('pay_count', 'desc')->take(4)->get();
         $latest = Product::query()->whereIn('id', $procs)->where('stock', '>', 0)->with('ProComments')
@@ -73,14 +75,14 @@ class HomeController extends Controller
         $div = $id;
 
         return view('front.home.home', [
-                'data'   => $data,
-                'slids'  => $slids,
-                'pans'   =>  $pans,
-                'pannns' => $pannns,
-                'paies'  => $paies,
-                'latest' => $latest,
-                'div'    => $div,
-            ]);
+            'data' => $data,
+            'slids' => $slids,
+            'pans' => $pans,
+            'pannns' => $pannns,
+            'paies' => $paies,
+            'latest' => $latest,
+            'div' => $div,
+        ]);
 
     }
 
@@ -190,16 +192,13 @@ class HomeController extends Controller
             }
 
 
-        }
-
-        elseif (Auth::guard('customer')->check()) {
+        } elseif (Auth::guard('customer')->check()) {
 
             $user_id = Auth::guard('customer')->user()->id;
             $order = Order::where('customer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
             if ($order) {
 
-                if ($cartOrderProduct = Cart::where(['order_id' => $order['id'], 'product_id' => $product['id']])->first())
-                {
+                if ($cartOrderProduct = Cart::where(['order_id' => $order['id'], 'product_id' => $product['id']])->first()) {
 
 
                     if ($cartOrderProduct->count + 1 > $product->stock) {
@@ -214,10 +213,7 @@ class HomeController extends Controller
                     $cartOrderProduct->save();
 
 
-                }
-
-
-                else {
+                } else {
                     $Cart = new Cart;
                     $Cart->count = $request->count;
                     $Cart->price = $product->price_discount * $Cart->count;
@@ -229,8 +225,7 @@ class HomeController extends Controller
                 //                $product->save();
                 $order->total = Cart::where('order_id', $order->id)->sum('price');
                 $order->save();
-            }
-            else {
+            } else {
                 $order = new Order;
                 $order->customer_id = Auth::guard('customer')->user()->id;
                 $order->status = 1;
@@ -258,9 +253,7 @@ class HomeController extends Controller
                 $order->total = Cart::where('order_id', $order->id)->sum('price');
                 $order->save();
             }
-        }
-
-        else {
+        } else {
 
             $order = Order::where('ip', $request->ip())->where('status', '1')->with('Carts')->latest()->first();
             if ($order) {
@@ -1178,8 +1171,6 @@ class HomeController extends Controller
         }
 
 
-
-
         if (Auth::guard('dealer')->check()) {
             $user_id = Auth::guard('dealer')->user()->id;
             $order = Order::where('status', '1')->where('dealer_id', $user_id)->with('Carts')->latest()->first();
@@ -1337,5 +1328,11 @@ class HomeController extends Controller
 
     }
 
-
+    public function expiredProducts()
+    {
+        return $products = Product::query()
+            ->where('stock', '>=', '5')
+            ->select('id', 'image', 'name_ar', 'price', 'dealer_price', 'stock', 'pay_count', 'created_at')
+            ->get();
+    }
 }

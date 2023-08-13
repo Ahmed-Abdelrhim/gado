@@ -29,7 +29,7 @@
                     <div class="left_part">
                         <h3>
                         @if(session()->get('locale') == "en")
-                                    
+
                                     {{$pans->name_en}}
                                     @else
                                     {{$pans->name_ar}}
@@ -40,7 +40,7 @@
                                 {!!$pans->desc_en!!}
                                     @else
                                     {!!$pans->desc_ar!!}
-                                   
+
                                     @endif </h4>
                         <a href="{{ route('front_show_more', ['div'=>$div,'id'=>'panner','panner'=>$pans->name_ar]) }}" class="btn-animation-1">
                             {{ __('messages.Shop_now') }}
@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </section>
     @endif
     @endif
@@ -77,7 +77,7 @@
                             <div class="left_part">
                                 <h3>
                                     @if(session()->get('locale') == "en")
-                                    
+
                                     {{$val->name_en}}
                                     @else
                                     {{$val->name_ar}}
@@ -88,7 +88,7 @@
                                 {!!$val->desc_en!!}
                                     @else
                                     {!!$val->desc_ar!!}
-                                   
+
                                     @endif
                                  </h4>
                                 <a href="{{ route('front_show_more', ['div'=>$div,'id'=>'panner','panner'=>$val->name_ar]) }}" class="btn-animation-2">
@@ -115,7 +115,7 @@
 
 @section('scripts')
 
-    
+
 <script>
 
     console.log(isMobile());
