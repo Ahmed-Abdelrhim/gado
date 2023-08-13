@@ -125,13 +125,10 @@ class HomeController extends Controller
 
     public function order(Request $request)
     {
-
         $product = Product::where('id', $request->id)->latest()->first();
-
         if ($request->count > $product->stock) {
             $stock = $product->stock;
             return response()->json(['error' => true, 'errorMsg' => "العدد المتوفر لهذا المنتج فقط $stock قطعة"]);
-
         }
 
         if (Auth::guard('dealer')->check()) {
@@ -193,14 +190,16 @@ class HomeController extends Controller
             }
 
 
-        } elseif (Auth::guard('customer')->check()) {
+        }
+
+        elseif (Auth::guard('customer')->check()) {
 
             $user_id = Auth::guard('customer')->user()->id;
             $order = Order::where('customer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
-
             if ($order) {
 
-                if ($cartOrderProduct = Cart::where(['order_id' => $order['id'], 'product_id' => $product['id']])->first()) {
+                if ($cartOrderProduct = Cart::where(['order_id' => $order['id'], 'product_id' => $product['id']])->first())
+                {
 
 
                     if ($cartOrderProduct->count + 1 > $product->stock) {
@@ -215,7 +214,10 @@ class HomeController extends Controller
                     $cartOrderProduct->save();
 
 
-                } else {
+                }
+
+
+                else {
                     $Cart = new Cart;
                     $Cart->count = $request->count;
                     $Cart->price = $product->price_discount * $Cart->count;
@@ -223,14 +225,12 @@ class HomeController extends Controller
                     $Cart->order_id = $order->id;
                     $Cart->save();
                 }
-
-
-//                $product->stock = $product->stock - $request->count;
-//                $product->save();
-
+                //                $product->stock = $product->stock - $request->count;
+                //                $product->save();
                 $order->total = Cart::where('order_id', $order->id)->sum('price');
                 $order->save();
-            } else {
+            }
+            else {
                 $order = new Order;
                 $order->customer_id = Auth::guard('customer')->user()->id;
                 $order->status = 1;
@@ -258,9 +258,9 @@ class HomeController extends Controller
                 $order->total = Cart::where('order_id', $order->id)->sum('price');
                 $order->save();
             }
+        }
 
-
-        } else {
+        else {
 
             $order = Order::where('ip', $request->ip())->where('status', '1')->with('Carts')->latest()->first();
             if ($order) {
@@ -320,14 +320,12 @@ class HomeController extends Controller
 
 
         }
+
         $product->pay_count = $product->pay_count + 1;
         $product->save();
         $Carts = Cart::where('order_id', $order->id)->get();
         $datas = count($Carts);
-
-
         return response()->json(['datas' => $datas, 'total' => $order->total]);
-
     }
 
     # home cart
@@ -901,8 +899,6 @@ class HomeController extends Controller
     # product
     public function product(Request $request, $div, $id)
     {
-
-
         $data = Division::where('id', $div)->with('Categories')->latest()->first();
         $pro = Product::with('ProComments.Dealer', 'ProComments.Customer', 'Images', 'ProTypes', 'Categories')->where('id', $id)->latest()->first();
         $majs = Product_Category::where('product_id', $id)->pluck('category_id')->toArray();

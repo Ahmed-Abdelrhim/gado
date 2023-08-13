@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Order_info;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
@@ -13,11 +14,11 @@ class Order extends Model
     {
         return $this->hasMany('App\Cart','order_id','id');
     }
-
     public function OrderProducts()
     {
         return $this->hasMany('App\Order_Product','order_id','id');
     }
+
     // public function Order_info()
     // {
     //     return $this->hasMany('App\Order_info','order_id','id');
