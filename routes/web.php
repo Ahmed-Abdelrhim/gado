@@ -63,13 +63,6 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 		]
 	]);
 
-    Route::get('/expiredProducts',[
-        'uses'  => 'front\HomeController@expiredProducts',
-        'as'    =>'expiredProducts',
-        'icon'  =>'<i class="nav-icon fas fa-poll"></i>',
-        'title' =>'المنتجات المنتهية',
-    ]);
-
     # store date
 	Route::get('store-date-sales',[
 		'uses'=>'HomeController@Storedate',
@@ -430,7 +423,26 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 		'hasFather'=>true,
 	]);
 
-	# store product
+
+    # expired products
+    //    Route::get('/expiredProducts',[
+    //        'uses'  => 'front\HomeController@expiredProducts',
+    //        'as'    =>'expiredProducts',
+    //        'title' =>'المنتجات المنتهية',
+    //        'icon' =>'<i class="fas fa-minus-circle"></i>',
+    //        'q_a'=>true,
+    //        'hasFather'=>true,
+    //    ]);
+
+        Route::get('/expiredProducts',[
+            'uses'  => 'front\HomeController@expiredProducts',
+            'as'    =>'expiredProducts',
+            'title' =>'المنتجات المنتهية',
+            'icon' => ' <i class="fas fa-tags"></i> ',
+        ]);
+
+
+    # store product
 	Route::post('store-product',[
 		'uses' =>'ProductsController@Store',
 		'as'   =>'storeproducts',
