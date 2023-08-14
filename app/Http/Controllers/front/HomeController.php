@@ -1328,13 +1328,4 @@ class HomeController extends Controller
         return view('front.cart.pay', compact('order', 'result', 'setting'));
 
     }
-
-    public function expiredProducts()
-    {
-        $products = Product::query()
-            ->where('stock', '<=', '5')
-            ->select('id', 'image', 'name_ar', 'price', 'dealer_price', 'stock', 'pay_count', 'created_at')
-            ->get();
-        return view('products.expired',['data'=>$products]);
-    }
 }

@@ -424,18 +424,19 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 	]);
 
 
-    # expired products
-    //    Route::get('/expiredProducts',[
-    //        'uses'  => 'front\HomeController@expiredProducts',
-    //        'as'    =>'expiredProducts',
-    //        'title' =>'المنتجات المنتهية',
-    //        'icon' =>'<i class="fas fa-minus-circle"></i>',
-    //        'q_a'=>true,
-    //        'hasFather'=>true,
-    //    ]);
+        # expired products
+        //    Route::get('/expiredProducts',[
+        //        'uses'  => 'ProductsController@expiredProducts',
+        //        'as'    =>'expiredProducts',
+        //        'title' =>'المنتجات المنتهية',
+        //        'icon' =>'<i class="fas fa-minus-circle"></i>',
+        //        'q_a'=>true,
+        //        'hasFather'=>true,
+        //    ]);
 
         Route::get('/expiredProducts',[
-            'uses'  => 'front\HomeController@expiredProducts',
+            // 'uses'  => 'front\HomeController@expiredProducts',
+            'uses'  => 'ProductsController@expiredProducts',
             'as'    =>'expiredProducts',
             'title' =>'المنتجات المنتهية',
             'icon' => ' <i class="fas fa-tags"></i> ',

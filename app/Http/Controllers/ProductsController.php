@@ -246,4 +246,13 @@ class ProductsController extends Controller
         Session::flash('success','تم الحذف');
         return back();
     }
+
+    public function expiredProducts()
+    {
+        $products = Product::query()
+            ->where('stock', '<=', '5')
+            ->select('id', 'image', 'name_ar', 'price', 'dealer_price', 'stock', 'pay_count', 'created_at')
+            ->get();
+        return view('products.expired',['data'=>$products]);
+    }
 }
