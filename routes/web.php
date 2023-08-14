@@ -42,9 +42,6 @@ Route::get('maintenance', function (){
     return "Under Maintenance";
 });
 
-// Route::get('admin/expired-products',[HomeController::class,'expiredProducts'])->name('expired.products');
-
-
 Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 
 	#------------------------------- start of HomeController -----------------------------#
@@ -65,9 +62,13 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 			'Storedatesales'
 		]
 	]);
-    Route::get('/expired-products',[HomeController::class,'expiredProducts'])->name('expiredProducts');
 
-
+    Route::get('/expiredProducts',[
+        'uses'  => 'front\HomeController@expiredProducts',
+        'as'    =>'expiredProducts',
+        'icon'  =>'<i class="nav-icon fas fa-poll"></i>',
+        'title' =>'المنتجات المنتهية',
+    ]);
 
     # store date
 	Route::get('store-date-sales',[
