@@ -432,7 +432,7 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
         //        'icon' =>'<i class="fas fa-minus-circle"></i>',
         //        'q_a'=>true,
         //        'hasFather'=>true,
-        //    ]);
+        //    ]);;
 
         Route::get('/expiredProducts',[
             // 'uses'  => 'front\HomeController@expiredProducts',
