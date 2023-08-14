@@ -41,7 +41,8 @@ Route::get('/', function () {
 Route::get('maintenance', function (){
     return "Under Maintenance";
 });
-Route::get('admin/expired-products',[HomeController::class,'expiredProducts'])->name('expired.products');
+
+// Route::get('admin/expired-products',[HomeController::class,'expiredProducts'])->name('expired.products');
 
 
 Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
@@ -64,9 +65,11 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
 			'Storedatesales'
 		]
 	]);
+    Route::get('/expired-products',[HomeController::class,'expiredProducts'])->name('expiredProducts');
 
 
-	# store date
+
+    # store date
 	Route::get('store-date-sales',[
 		'uses'=>'HomeController@Storedate',
 		'as'  =>'Storedatesales',

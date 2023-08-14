@@ -17,6 +17,7 @@ use App\Email;
 use App\Pro_Comments;
 use App\Setting;
 use App\Category;
+use Illuminate\Support\Facades\Route;
 use Session;
 use Auth;
 use App\Pro_Like;
@@ -1330,9 +1331,10 @@ class HomeController extends Controller
 
     public function expiredProducts()
     {
-        return $products = Product::query()
-            ->where('stock', '>=', '5')
+        $products = Product::query()
+            ->where('stock', '<=', '5')
             ->select('id', 'image', 'name_ar', 'price', 'dealer_price', 'stock', 'pay_count', 'created_at')
             ->get();
+        return view('products.expired',['data'=>$products]);
     }
 }
