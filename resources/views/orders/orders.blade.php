@@ -91,7 +91,8 @@
 
                                 </td>
                                 <td>
-                                    <span class="badge badge-success">{{Date::parse($value->created_at)->diffForHumans()}}</span>
+                                    <!-- <span class="badge badge-success">{ {Date::parse($value->created_at)->diffForHumans()} }</span> -->
+                                    <span class="badge badge-success">{{ \Illuminate\Support\Carbon::parse($value->created_at)->format('d-M-Y') }}</span>
                                 </td>
 
                                 <td>
