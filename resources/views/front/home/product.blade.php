@@ -113,7 +113,11 @@
                             </div>
 
                             <div class="available_in_stock" style="margin-bottom: 8px;">
-                                <span style="color:red;font-size: 13px;"> متوفر : {{$pro->stock}} قطع  </span>
+                                @if($pro->stock != 0)
+                                    <span style="color:red;font-size: 13px;"> متوفر : {{$pro->stock}} قطع  </span>
+                                @else
+                                    <span style="color:red;font-size: 13px;">  غير متوفر حالياً  </span>
+                                @endif
                             </div>
 
                             <div class="price">
@@ -148,7 +152,7 @@
                                 </div>
                                 <div class="btn_min_max">
                                     <button type="button" class="min"><i class="fas fa-minus"></i></button>
-                                    <input type="number" value="1" class="inputCount count"/>
+                                    <input disabled type="number" value="1" class="inputCount count"/>
                                     <button type="button" class="max"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
@@ -185,21 +189,18 @@
                                 <div class="modal-content">
 
 
+                                    {{--                                    <div class="modal-header">--}}
 
 
+                                    {{--                                      --}}
 
-{{--                                    <div class="modal-header">--}}
-
-
-{{--                                      --}}
-
-{{--                                        <button type="button" class="close" data-dismiss="modal">&times;</button>--}}
-{{--                                        <h4 class="modal-title">Modal Header</h4>--}}
-{{--                                    </div>--}}
+                                    {{--                                        <button type="button" class="close" data-dismiss="modal">&times;</button>--}}
+                                    {{--                                        <h4 class="modal-title">Modal Header</h4>--}}
+                                    {{--                                    </div>--}}
                                     <div class="modal-body body_modal">
-{{--                                        <button type="button" class="btn btn-danger btn-round"  id="xmodal" style="position: absolute;top: 5px; left: 5px; border-radius: 50%; ">--}}
-{{--                                            X--}}
-{{--                                        </button>--}}
+                                        {{--                                        <button type="button" class="btn btn-danger btn-round"  id="xmodal" style="position: absolute;top: 5px; left: 5px; border-radius: 50%; ">--}}
+                                        {{--                                            X--}}
+                                        {{--                                        </button>--}}
                                         <div class="icon">
                                             <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
                                                 <g stroke="currentColor" stroke-width="1.5" fill="none"
@@ -219,10 +220,9 @@
                                                class="btn-animation-2">
                                                 إتمام عملية الشراء
                                             </a>
-                                            <a href="javascript:;"  id="xmodal" class="btn-animation-4">
+                                            <a href="javascript:;" id="xmodal" class="btn-animation-4">
                                                 منتجات اخري
                                             </a>
-
 
 
                                         </div>
@@ -230,7 +230,6 @@
                                 </div>
                             </div>
                         </div>
-
 
 
                         <div class="modal fade" id="exampleModalError" tabindex="-1"
@@ -340,8 +339,8 @@
 
                     <div class="tab-pane fade" id="nav_reviews" role="tabpanel" aria-labelledby="nav_reviews_tab">
                         <div class="all_reviews">
-                        @foreach($pro->ProComments as $key => $val)
-                            <!-- START:: SINGLE REVIEW -->
+                            @foreach($pro->ProComments as $key => $val)
+                                <!-- START:: SINGLE REVIEW -->
                                 <div class="single_review">
 
                                     <div class="name_rate">
@@ -519,7 +518,7 @@
     </script>
     <script>
 
-        $('#xmodal').on('click', function (){
+        $('#xmodal').on('click', function () {
             $("#exampleModal").modal('hide');
         });
 

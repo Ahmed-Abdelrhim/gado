@@ -118,7 +118,13 @@
                                                 <div class="content_item">
                                                     <!-- START:: HEAD  -->
                                                     <div class="head_details">
-                                                        <span style="color:red;font-size: 13px;"> متوفر : {{$val->Product->stock}} قطع  </span>
+                                                        {{-- <span style="color:red;font-size: 13px;"> متوفر : {{$val->Product->stock}} قطع  </span> --}}
+                                                        @if($val->Product->stock != 0)
+                                                            <span style="color:red;font-size: 13px;"> متوفر : {{$val->Product->stock}} قطع  </span>
+                                                        @else
+                                                            <span style="color:red;font-size: 13px;">  غير متوفر حالياً  </span>
+                                                        @endif
+
                                                         <h4><a href="#"> @if(session()->get('locale') == "en")
                                                                     {{$val->Product->name_en}}
                                                                 @else
@@ -190,7 +196,7 @@
                                                                 <div class="btn_min_max">
                                                                     <span class="input-number-decrement quantity"
                                                                           data-id="{{ $val->id }}">–</span>
-                                                                    <input type="number" id="count"
+                                                                    <input disabled type="number" id="count"
                                                                            data-price="{{ $val->price }}"
                                                                            data-id="{{ $val->id }}" name="count"
                                                                            class="quantity{{ $val->id }} form-control text-center input-number"
@@ -346,6 +352,8 @@
 
             window.inputNumber = function (el) {
 
+                console.log('yes');
+
                 var min = el.attr('min') || false;
                 var max = el.attr('max') || false;
 
@@ -395,10 +403,10 @@
                                     $(".quantity" + id).val(value);
                                     if (s.datas == '0') {
                                         {{--  @php $url = \Illuminate\Support\Facades\Request::url(); @endphp   --}}
-                                        {{--if ({{ $url }} === 'cart-home/1') {--}}
-                                        {{--    window.location.href = "{{ url('/home/1') }}";--}}
-                                        {{--}--}}
-                                        window.location.href = "{{  url('/')}}";
+                                                {{--if ({{ $url }} === 'cart-home/1') {--}}
+                                                {{--    window.location.href = "{{ url('/home/1') }}";--}}
+                                                {{--}--}}
+                                            window.location.href = "{{  url('/')}}";
                                     }
                                 }
                             });
