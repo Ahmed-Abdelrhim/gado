@@ -111,6 +111,11 @@
                                 </ul>
                                 <span>{{count($pro->ProComments)}} تقييم</span>
                             </div>
+
+                            <div class="available_in_stock" style="margin-bottom: 8px;">
+                                <span style="color:red;font-size: 13px;"> متوفر : {{$pro->stock}} قطع  </span>
+                            </div>
+
                             <div class="price">
                                 @if(auth()->guard('dealer')->check())
                                     <span class="new_price">{{ $pro->dealer_price }} EGP</span>

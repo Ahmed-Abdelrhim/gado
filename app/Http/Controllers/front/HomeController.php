@@ -134,8 +134,8 @@ class HomeController extends Controller
             return response()->json(['error' => true, 'errorMsg' => "العدد المتوفر لهذا المنتج فقط $stock قطعة"]);
         }
 
-        if (Auth::guard('dealer')->check()) {
-
+        if (Auth::guard('dealer')->check())
+        {
             $user_id = Auth::guard('dealer')->user()->id;
             $order = Order::where('dealer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
             if ($order) {
@@ -162,8 +162,10 @@ class HomeController extends Controller
                     $Cart->product_id = $product->id;
                     $Cart->order_id = $order->id;
                     $Cart->save();
-                    $product->stock = $product->stock - $request->count;
-                    $product->save();
+
+                    // TODO Here was the dealer bug
+                    // $product->stock = $product->stock - $request->count;
+                    // $product->save();
                 }
 
 
@@ -193,7 +195,18 @@ class HomeController extends Controller
             }
 
 
-        } elseif (Auth::guard('customer')->check()) {
+        }
+
+
+
+
+
+
+
+
+
+
+        elseif (Auth::guard('customer')->check()) {
 
             $user_id = Auth::guard('customer')->user()->id;
             $order = Order::where('customer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
