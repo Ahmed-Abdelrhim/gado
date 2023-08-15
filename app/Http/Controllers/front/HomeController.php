@@ -185,48 +185,31 @@ class HomeController extends Controller
                 $Cart->product_id = $product->id;
                 $Cart->order_id = $order->id;
                 $Cart->save();
-                $product->stock = $product->stock - $request->count;
-                $product->save();
+
+                // TODO Here was the dealer bug
+                // $product->stock = $product->stock - $request->count;
+                // $product->save();
 
 
                 $order = Order::where('id', $order->id)->where('status', '1')->with('Carts')->latest()->first();
                 $order->total = Cart::where('order_id', $order->id)->sum('price');
                 $order->save();
             }
-
-
         }
 
-
-
-
-
-
-
-
-
-
         elseif (Auth::guard('customer')->check()) {
-
             $user_id = Auth::guard('customer')->user()->id;
             $order = Order::where('customer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
             if ($order) {
 
                 if ($cartOrderProduct = Cart::where(['order_id' => $order['id'], 'product_id' => $product['id']])->first()) {
-
-
                     if ($cartOrderProduct->count + 1 > $product->stock) {
                         $stock = $product->stock;
                         return response()->json(['error' => true, 'errorMsg' => "العدد المتوفر لهذا المنتج فقط $stock قطعة"]);
-
                     }
-
                     $cartOrderProduct->price += $product->price_discount * $cartOrderProduct->count;
-
                     $cartOrderProduct->count += $request->count;
                     $cartOrderProduct->save();
-
-
                 } else {
                     $Cart = new Cart;
                     $Cart->count = $request->count;
@@ -502,9 +485,9 @@ class HomeController extends Controller
         $product = Product::where('id', $Cart->product_id)->latest()->first();
 
 
-//        $Cass = $Cart->count - $request->count ;
-//        $product->stock = $product->stock - $Cass;
-//        $product->save();
+        //        $Cass = $Cart->count - $request->count ;
+        //        $product->stock = $product->stock - $Cass;
+        //        $product->save();
 
 
         if ($request->count > $product->stock) {
