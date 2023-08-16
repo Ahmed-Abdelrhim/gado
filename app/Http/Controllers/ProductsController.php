@@ -256,8 +256,9 @@ class ProductsController extends Controller
     public function getExpiredProducts()
     {
         $products = Product::query()
-            ->where('stock', '<=', '5')
+            ->where('stock', '<=', '3')
             ->select('id', 'image', 'name_ar', 'price', 'dealer_price', 'stock', 'pay_count', 'created_at')
+            ->orderBy('stock','asc')
             ->get();
 
         return Datatables::of($products)
@@ -290,7 +291,6 @@ class ProductsController extends Controller
             ->addColumn('created_at', function ($product) {
                 return $product->created_at;
             })
-            // ->rawColumns(['name', 'action'])
             ->rawColumns(['action'])
             ->escapeColumns([])
             ->make(true);
