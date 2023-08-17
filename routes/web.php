@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\front\HomeController;
 /*
@@ -434,13 +435,15 @@ Route::group(['middleware' => ['role','auth'],'prefix'=>'admin'], function() {
         //        'hasFather'=>true,
         //    ]);;
 
-        Route::get('/expiredProducts',[
+        Route::get('/expired/products',[
             // 'uses'  => 'front\HomeController@expiredProducts',
             'uses'  => 'ProductsController@expiredProducts',
             'as'    =>'expiredProducts',
             'title' =>'المنتجات المنتهية',
             'icon' => ' <i class="fas fa-tags"></i> ',
         ]);
+
+        Route::get('get/expired/products',[ProductsController::class,'getExpiredProducts'])->name('get.expired.products');
 
 
     # store product

@@ -14,6 +14,7 @@ use View;
 use Image;
 use File;
 use Session;
+use Yajra\DataTables\DataTables;
 
 class ProductsController extends Controller
 {
@@ -249,10 +250,49 @@ class ProductsController extends Controller
 
     public function expiredProducts()
     {
+        return view('products.expired');
+    }
+
+    public function getExpiredProducts()
+    {
         $products = Product::query()
-            ->where('stock', '<=', '5')
+            ->where('stock', '<=', '3')
             ->select('id', 'image', 'name_ar', 'price', 'dealer_price', 'stock', 'pay_count', 'created_at')
+            ->orderBy('stock','asc')
             ->get();
-        return view('products.expired',['data'=>$products]);
+
+        return Datatables::of($products)
+            ->addColumn('id', function ($product) {
+                return $product->id;
+            })
+            ->addColumn('action', function ($product) {
+                $retAction = '<a href="' . route('editproducts', $product->id) . '" class="btn btn-primary btn-sm" type="submit" > <i class="fas fa-edit"></i></a>';
+                $retAction .= '<a href="' . route('DeleteProduct', $product->id) . '" class="btn btn-danger btn-sm delete" type="submit" > <i class="fas fa-trash"></i></a>';
+                return $retAction;
+            })
+            ->addColumn('image', function ($product) {
+                return '<img src="' . $product->card_image . '" alt="" style="width: 100px"/>';
+            })
+            ->addColumn('name_ar', function ($product) {
+                    return $product->name_ar;
+            })
+            ->addColumn('price', function ($product) {
+                return $product->price;
+            })
+            ->addColumn('dealer_price', function ($product) {
+                return $product->dealer_price;
+            })
+            ->addColumn('stock', function ($product) {
+                return $product->stock;
+            })
+            ->addColumn('pay_count', function ($product) {
+                return $product->pay_count;
+            })
+            ->addColumn('created_at', function ($product) {
+                return $product->created_at;
+            })
+            ->rawColumns(['action'])
+            ->escapeColumns([])
+            ->make(true);
     }
 }
