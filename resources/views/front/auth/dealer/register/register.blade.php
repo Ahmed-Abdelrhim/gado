@@ -48,7 +48,7 @@
                                             @include('front.auth.parts.password_input')
 
                                             <div class="col-md-12">
-                                                <button type="button" data-bs-toggle="modal"
+                                                <button class="btn-animation-2 w-100" type="button" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal">
                                                     {{ __('messages.create_ac') }}
                                                 </button>

@@ -1327,6 +1327,7 @@ class HomeController extends Controller
 
     public function play()
     {
+        return $dealer = Dealer::query()->where('active_phone','01152067271')->first();
         return Request::capture();
     }
 }
