@@ -47,12 +47,4 @@ Route::group(['middleware' => ['web']], function() {
     Route::post('dealer/verify-phone','front\dealer\auth\PasswordController@VerifyPhone')->name('dealer.verify_phone');
 
 });
-
-
-
-
-
-
-
-
-
+// http://127.0.0.1:8000/dealer/register?token=d17-08-231692292216dFsZnMg590GjN2cp8m0psJ6uFFYjSf07ajfTIFwbrFpmAwpSQn&phone=01152067271

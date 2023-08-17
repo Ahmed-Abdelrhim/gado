@@ -112,3 +112,4 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('play','front\HomeController@play');
 
 });
+
