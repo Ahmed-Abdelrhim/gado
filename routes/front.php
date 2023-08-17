@@ -109,5 +109,6 @@ Route::group(['middleware' => ['web']], function () {
         return view('front.application.iphone');
     })->name('app.iphone');
 
+    Route::get('play','front\HomeController@play');
 
 });

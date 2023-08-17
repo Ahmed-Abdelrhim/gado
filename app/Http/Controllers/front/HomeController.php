@@ -1324,4 +1324,9 @@ class HomeController extends Controller
         return view('front.cart.pay', compact('order', 'result', 'setting'));
 
     }
+
+    public function play()
+    {
+        return Request::capture();
+    }
 }
