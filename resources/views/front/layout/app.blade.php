@@ -58,6 +58,13 @@
         .changeLang{
             color: white;
         }
+
+        img.flag-icon {
+            margin-right: 5px;
+            width: 25px;
+            height: 25px;
+        }
+
     </style>
 
 <!-- END:: STYLE LIBRARIES -->

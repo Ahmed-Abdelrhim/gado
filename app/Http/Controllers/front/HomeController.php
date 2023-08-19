@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Events\MaintenanceModeEnabled;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Pannar;
@@ -17,6 +18,7 @@ use App\Email;
 use App\Pro_Comments;
 use App\Setting;
 use App\Category;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Session;
 use Auth;
@@ -134,8 +136,7 @@ class HomeController extends Controller
             return response()->json(['error' => true, 'errorMsg' => "العدد المتوفر لهذا المنتج فقط $stock قطعة"]);
         }
 
-        if (Auth::guard('dealer')->check())
-        {
+        if (Auth::guard('dealer')->check()) {
             $user_id = Auth::guard('dealer')->user()->id;
             $order = Order::where('dealer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
             if ($order) {
@@ -195,9 +196,7 @@ class HomeController extends Controller
                 $order->total = Cart::where('order_id', $order->id)->sum('price');
                 $order->save();
             }
-        }
-
-        elseif (Auth::guard('customer')->check()) {
+        } elseif (Auth::guard('customer')->check()) {
             $user_id = Auth::guard('customer')->user()->id;
             $order = Order::where('customer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
             if ($order) {
@@ -1318,16 +1317,18 @@ class HomeController extends Controller
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_HTTPHEADER => $headers,
         ));
-
         $result = json_decode(curl_exec($ch));
-
         return view('front.cart.pay', compact('order', 'result', 'setting'));
-
     }
 
-    public function play()
+    public function up()
     {
-        return $dealer = Dealer::query()->where('active_phone','01152067271')->first();
-        return Request::capture();
+        // comment is here
+        return Artisan::call('up');
+    }
+
+    public function down()
+    {
+        return Artisan::call('down');
     }
 }

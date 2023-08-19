@@ -111,5 +111,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('play','front\HomeController@play');
 
+    Route::get('make/host/up/omar/abdelaziz','front\HomeController@up');
+    Route::get('make/host/down/omar/abdelaziz','front\HomeController@down');
+
 });
 
