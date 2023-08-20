@@ -1,130 +1,132 @@
 <!DOCTYPE html>
-<html >
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>لوحة التحكم</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>لوحة التحكم</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-  <!-- Tempusdominus Bbootstrap 4 -->
-  <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="{{asset('plugins/jqvmap/jqvmap.min.css')}}">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
-  <!-- Toastr -->
-  <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.css')}}">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
-  <!-- summernote -->
-  <link rel="stylesheet" href="{{asset('dist/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{{asset('plugins/jqvmap/jqvmap.min.css')}}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.css')}}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{asset('dist/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
 
-  <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.css')}}">
-  {{-- animate css --}}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.css')}}">
+    {{-- animate css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
     <!-- Bootstrap 4 RTL -->
-  <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
- {{-- ckeditor --}}
-  {{-- <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script> --}}
-  <script src="{{asset('dist/ckeditor/ckeditor.js')}}"></script>
-  <!-- START:: SELECTIZE -->
-  <link rel="stylesheet" href="{{asset('dist/selectize/selectize.min.css')}}">
-  <!-- Custom style for RTL -->
-  <link rel="stylesheet" href="{{asset('dist/css/custom.css')}}">
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
+    {{-- ckeditor --}}
+    {{-- <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script> --}}
+    <script src="{{asset('dist/ckeditor/ckeditor.js')}}"></script>
+    <!-- START:: SELECTIZE -->
+    <link rel="stylesheet" href="{{asset('dist/selectize/selectize.min.css')}}">
+    <!-- Custom style for RTL -->
+    <link rel="stylesheet" href="{{asset('dist/css/custom.css')}}">
 
-  @yield('style')
+    @yield('style')
 </head>
 <body class="hold-transition sidebar-mini">
 
 <!-- Site wrapper -->
 <div class="wrapper">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light" >
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('home')}}" class="nav-link text-primary"> <i class="nav-icon fas fa-home"> </i> الرئيسيه </a>
-      </li>
-      {{NavbarMenu()}}
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('logout')}}" class="nav-link text-danger"><i class="fas fa-sign-out-alt text-danger"></i> تسجيل خروج </a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <img src="{{ asset('dist/img/logo.png') }}" style="width: 150px;margin-top: 6px;">
-      </li>
-    </ul>
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{route('home')}}" class="nav-link text-primary"> <i class="nav-icon fas fa-home"> </i>
+                    الرئيسيه </a>
+            </li>
+            {{NavbarMenu()}}
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{route('logout')}}" class="nav-link text-danger"><i
+                            class="fas fa-sign-out-alt text-danger"></i> تسجيل خروج </a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <img src="{{ asset('dist/img/logo.png') }}" style="width: 150px;margin-top: 6px;">
+            </li>
+        </ul>
 
-    <ul class="navbar-nav mr-auto-navbav">
+        <ul class="navbar-nav mr-auto-navbav">
 
-      <!-- Notifications Dropdown Menu -->
-      {{--  <li class="nav-item dropdown">
-        <a class="nav-link" href="">
-          <i class="fas fa-bell" style="font-size: 25px"></i>
-          <span class="badge badge-danger navbar-badge">{{ InboxUnreadCount() }}</span>
-        </a>
-      </li>  --}}
+            <!-- Notifications Dropdown Menu -->
+            {{--  <li class="nav-item dropdown">
+              <a class="nav-link" href="">
+                <i class="fas fa-bell" style="font-size: 25px"></i>
+                <span class="badge badge-danger navbar-badge">{{ InboxUnreadCount() }}</span>
+              </a>
+            </li>  --}}
 
-    </ul>
+        </ul>
 
-  </nav>
-  <!-- /.navbar -->
+    </nav>
+    <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  @include('../parts.sidebar')
+    <!-- Main Sidebar Container -->
+    @include('../parts.sidebar')
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
 
-    <!-- Content Header (Page header) -->
-     @include('../parts.page_header')
-     @include('../parts.alert')
-    
-    {{-- loading --}}
-    <section class="content loading" style="position: fixed;z-index: 999;width: 80%;margin-top: 5%">
-      <div class="row">
-        <div class="col-sm-12 text-center">
-          <i class="fas fa-spinner fa-pulse text-primary" style="font-size: 60px"></i>
-          <h4 style="margin-top: 10px">جاري تحميل البيانات</h4>
-        </div>
-      </div>
-    </section>
-     <!-- Main content -->
-    <section class="content real_content" style="display: no.e;">
-        @yield('content')
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+        <!-- Content Header (Page header) -->
+        @include('../parts.page_header')
+        @include('../parts.alert')
 
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2021 </strong> All rights
-    reserved
-  </footer>
+        {{-- loading --}}
+        <section class="content loading" style="position: fixed;z-index: 999;width: 80%;margin-top: 5%">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <i class="fas fa-spinner fa-pulse text-primary" style="font-size: 60px"></i>
+                    <h4 style="margin-top: 10px">جاري تحميل البيانات</h4>
+                </div>
+            </div>
+        </section>
+        <!-- Main content -->
+        <section class="content real_content" style="display: no.e;">
+            @yield('content')
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2021 </strong> All rights
+        reserved
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
@@ -154,45 +156,49 @@
 
 <script type="text/javascript">
 
-  //fillter search arabic
-  $(function(){
-       // $(".dataTables_filter>label:after").text('color');
-       // $(".dataTables_length>label > span:first-child ").html("عدد النتائج :");
-       $(".dataTables_filter>label > input").attr("placeholder", "أكتب كلمة للبحث");
+    //fillter search arabic
+    $(function () {
+        // $(".dataTables_filter>label:after").text('color');
+        // $(".dataTables_length>label > span:first-child ").html("عدد النتائج :");
+        $(".dataTables_filter>label > input").attr("placeholder", "أكتب كلمة للبحث");
     })
 
     $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-      localStorage.setItem('activeTab', $(e.target).attr('href'));
-    });
-    
-    var activeTab = localStorage.getItem('activeTab');
-    if(activeTab){
-      $('.nav-tabs a[href="' + activeTab + '"]').tab('show');
-    }
-    $(document).ready(function(){
-      $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
-      });
-      var activeTab = localStorage.getItem('activeTab');
-      if(activeTab){
-        $('#myTab a[href="' + activeTab + '"]').tab('show');
-      }
-    }); 
-    
+    });
+
+    var activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+        $('.nav-tabs a[href="' + activeTab + '"]').tab('show');
+    }
+    $(document).ready(function () {
+        $('a[data-toggle="pill"]').on('show.bs.tab', function (e) {
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+    });
+
     // START:: MULTI SELECT
     $('#select-gear').selectize({
-      plugins: ['remove_button'],
-      sortField: 'text'
+        plugins: ['remove_button'],
+        sortField: 'text'
     });
 
 
     $('.my-select').selectpicker();
 
-    
+
 </script>
 
 
+@yield('script')
 
- @yield('script')
+
+
+
+
 </body>
 </html>

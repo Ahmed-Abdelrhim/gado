@@ -97,6 +97,16 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function newLanguageChange(string  $language)
+    {
+        if (!in_array($language,['en', 'ar'])) {
+            return redirect()->back();
+        }
+        App::setLocale($language);
+        session()->put('locale', $language);
+        return redirect()->back();
+    }
+
     public function ser(Request $request, $div)
     {
         $data = Division::where('id', $div)->with('Categories')->latest()->first();

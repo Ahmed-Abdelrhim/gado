@@ -13,6 +13,9 @@ Route::group(['middleware' => ['web']], function () {
     // Route::get('login', 'front\AuthController@Login')->name('front.login');
 
     Route::get('lang/change', 'front\HomeController@change')->name('changeLang');
+
+    Route::get('new/lang/change/{lang}', 'front\HomeController@newLanguageChange')->name('newLangChange');
+
     /******** MORE **********/
     Route::get('show-more/{div?}/{id?}/{panner?}', 'front\HomeController@shoemore')->name('front_show_more');
     Route::get('contuct-us/{div?}', 'front\HomeController@contuct')->name('front_contuct_us');

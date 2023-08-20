@@ -64,10 +64,50 @@
             width: 25px;
             height: 25px;
         }
+        /* Here Is Dropdown */
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .custom-dropdown select {
+            display: none;
+        }
+
+        .custom-dropdown .dropdown-display {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .custom-dropdown .dropdown-display img {
+            max-width: 20px;
+            max-height: 20px;
+            margin-right: 5px;
+        }
+
+        .custom-dropdown .dropdown-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        .custom-dropdown .dropdown-options option {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
 
     </style>
 
-<!-- END:: STYLE LIBRARIES -->
+    <!-- END:: STYLE LIBRARIES -->
 </head>
 
 
@@ -359,6 +399,34 @@
     });
 
 </script>
+
+
+
+{{-- Here Js Languages --}}
+<script>
+    $(document).ready(function () {
+        const dropdownDisplay = document.querySelector('.custom-dropdown .dropdown-display');
+        const dropdownOptions = document.querySelector('.custom-dropdown .dropdown-options');
+        const options = document.querySelectorAll('.custom-dropdown .dropdown-options option');
+
+        dropdownDisplay.addEventListener('click', () => {
+            console.log('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+            dropdownOptions.style.display = 'block';
+            dropdownOptions.classList.toggle('show');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                dropdownDisplay.innerHTML = option.innerHTML;
+                dropdownOptions.style.display = 'none';
+                dropdownOptions.classList.remove('show');
+            });
+        });
+    });
+</script>
+
+
+
 </body>
 
 </html>

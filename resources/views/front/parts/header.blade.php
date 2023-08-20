@@ -16,18 +16,57 @@
                         <div class="lang">
                             <!--<strong>{{ __('messages.Choose_Language') }} </strong>-->
 
-                            <select class="changeLang" style=" background: rgba(250, 250, 250, 0.0);border:none">
-                                <option value="ar" {{ session()->get('locale') == 'ar' ? 'selected' : '' }}>
-                                    🇪🇬 العربية
-                                    {{-- <i class="fa-solid fa-flag-usa"></i>   --}}
-                                    <img src="{{asset('egypt.png')}}" alt="not-found">
-                                </option>
+{{--                            <select class="changeLang" --}}
+{{--                                    style=" background: rgba(250, 250, 250, 0.0);border:none">--}}
+{{--                                <option value="ar"--}}
+{{--                                        {{ session()->get('locale') == 'ar' ? 'selected' : '' }} data-img-src="{{asset('egypt.png')}}">--}}
+{{--                                    <img src="{{asset('egypt.png')}}" alt="not-found"--}}
+{{--                                         style="width: 20px; height: 20px;"/>--}}
+{{--                                    <i class="fa-solid fa-flag-usa"></i>--}}
+{{--                                    🇪🇬 العربية--}}
+{{--                                </option>--}}
 
-                                <option value="en" {{ session()->get('locale') == 'en' ? 'selected' : '' }}>
-                                    <img src="{{asset('united-states.png')}}" alt="not-found">
-                                    English 🇬🇧
-                                </option>
-                            </select>
+{{--                                <option value="en"--}}
+{{--                                        {{ session()->get('locale') == 'en' ? 'selected' : '' }} data-img-src="{{asset('united-states.png')}}">--}}
+{{--                                    <img src="{{asset('united-states.png')}}" alt="not-found"--}}
+{{--                                         style="width: 20px; height: 20px;"/>--}}
+{{--                                    English 🇬🇧--}}
+{{--                                </option>--}}
+{{--                            </select>--}}
+
+
+                            <div class="custom-dropdown">
+                                <div class="dropdown-display">
+                                    @if(app()->getLocale() == 'en' )
+                                        <a href="{{ route('newLangChange','ar')}}" >
+                                            <img src="{{asset('egypt.png')}}" alt="Image 1"
+                                                 style="margin-left: 10px;margin-top: 4px;">
+                                            <span> 🇪🇬 العربية</span>
+                                        </a>
+                                    @else
+                                        <a href="{{route('newLangChange','en')}}">
+                                            <img src="{{asset('united-states.png')}}" alt="Image 2"
+                                                 style="margin-left: 10px;margin-top: 4px;"/>
+                                            <span>  English 🇪🇬 </span>
+                                        </a>
+                                    @endif
+                                </div>
+
+                                {{--                                <div class="dropdown-options">--}}
+                                {{--                                    <option value="ar">--}}
+                                {{--                                        <img src="{{asset('egypt.png')}}" alt="Image 1">--}}
+                                {{--                                        🇪🇬 العربية--}}
+                                {{--                                    </option>--}}
+
+                                {{--                                    <option value="en">--}}
+                                {{--                                        <img src="{{asset('united-states.png')}}" alt="Image 2"/>--}}
+                                {{--                                        English 🇪🇬--}}
+                                {{--                                    </option>--}}
+                                {{--                                </div>--}}
+
+                            </div>
+
+
                         </div>
 
                         @if(auth()->guard('customer')->check() || auth()->guard('dealer')->check())
@@ -676,3 +715,16 @@
     @endif
     <!-- END:: HEADER MOBILE -->
 </header>
+
+
+{{--<script type="text/javascript">--}}
+{{--    $('#changeLang option').each(function () {--}}
+{{--        var img = $(this).attr("data-img-src");--}}
+{{--        var text = this.innerText;--}}
+{{--        var value = $(this).val();--}}
+{{--        template = $("<div><img src=\"" + img + "\" style=\"width:20px;height:20px;\" /></div>");--}}
+{{--        // var item = '<li><img src="' + img + '" alt="" value="' + value + '"/><span>' + text + '</span></li>';--}}
+{{--        return template;--}}
+{{--        // langArray.push(item);--}}
+{{--    })--}}
+{{--</script>--}}
