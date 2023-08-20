@@ -105,6 +105,22 @@
             padding: 5px;
         }
 
+            /*.custom-dropdown .dropdown-options a img:hover {*/
+            /*    color: white;*/
+            /*}*/
+
+        .custom-dropdown .dropdown-options a span:hover {
+            color: white;
+        }
+
+        .languageSpan {
+            color: white;
+        }
+
+        .languageSpan:hover {
+            color: white;
+        }
+
     </style>
 
     <!-- END:: STYLE LIBRARIES -->
