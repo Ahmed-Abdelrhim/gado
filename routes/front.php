@@ -4,8 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\front\AuthController;
 
+
+
+//Route::group(['middleware' => ['custom_maintenance']], function () {
+//    Route::get('app/maintenance','front\HomeController@appMaintenance')->name('app.maintenance');
+//    Route::get('make/host/up/omar/abdelaziz','front\HomeController@up');
+//    Route::get('make/host/down/omar/abdelaziz','front\HomeController@down');
+//});
+
+
+
+
 Route::get('login', [AuthController::class,'Login'])->name('front.login');
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web' ]], function () {
     /******** HOME **********/
 
     //    Route::get('/home/{id}','front\HomeController@Home')->name('front.home');
@@ -114,8 +125,33 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('play','front\HomeController@play');
 
+
+
+
+
+    Route::get('app/maintenance','front\HomeController@appMaintenance')->name('app.maintenance');
     Route::get('make/host/up/omar/abdelaziz','front\HomeController@up');
     Route::get('make/host/down/omar/abdelaziz','front\HomeController@down');
 
 });
 
+//I have this on routes
+//    Route::get('make/host/up/omar/abdelaziz','front\HomeController@up');
+//    Route::get('make/host/down/omar/abdelaziz','front\HomeController@down');
+//
+//    and those are the methods
+//    public function up()
+//{
+//    // comment is here
+//    return Artisan::call('up');
+//}
+//
+//    public function down()
+//{
+//    return Artisan::call('down');
+//}
+//
+//
+//when I visit the route `make/host/down/omar/abdelaziz` my application will be in maintenance mode
+//but when I visit the route `make/host/up/omar/abdelaziz` the application is not going back to remove maintenance mode
+//I nned to resolve it

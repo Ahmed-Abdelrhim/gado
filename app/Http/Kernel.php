@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
 
         'dealer' => \App\Http\Middleware\RedirectIfNotDealer::class,
         'dealer_guest' => \App\Http\Middleware\RedirectIfDealer::class,
+        'custom_maintenance' => \App\Http\Middleware\CustomMaintenanceMode::class,
     ];
 
     /**

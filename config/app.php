@@ -41,6 +41,10 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+
+    // 'app_maintenance' => env('CUSTOM_APP_MAINTENANCE'),
+    'app_maintenance' => 'false',
+
     /*
     |--------------------------------------------------------------------------
     | Application URL

@@ -19,6 +19,7 @@ use App\Pro_Comments;
 use App\Setting;
 use App\Category;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Session;
 use Auth;
@@ -1333,12 +1334,30 @@ class HomeController extends Controller
 
     public function up()
     {
-        // comment is here
-        return Artisan::call('up');
+        Config::set('app.app_maintenance', 'true');
+        Artisan::call('config:cache');
+        Artisan::call('cache:clear');
+        return 'Application Now Is Restored Successfully';
+
+        // return config(['app.app_maintenance' => true]);
+        // return config('app.app_maintenance' , true);
+        //
+        // return Artisan::call('up');
     }
 
     public function down()
     {
-        return Artisan::call('down');
+        if (!config('app.app_maintenance')) {
+            return 'false';
+        }
+        return 'true';
+        // config('app_maintenance' , true);
+        // return 'Success Application Now Is On Maintenance Mode';
+        // return Artisan::call('down');
+    }
+
+    public function appMaintenance()
+    {
+        return 'App Is In Maintenance Mode';
     }
 }
