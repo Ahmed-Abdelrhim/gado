@@ -1347,6 +1347,7 @@ class HomeController extends Controller
 
     public function down()
     {
+        return config('app.app_maintenance');
         if (!config('app.app_maintenance')) {
             return 'false';
         }
