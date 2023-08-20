@@ -78,8 +78,9 @@
             display: flex;
             align-items: center;
             padding: 5px;
-            border: 1px solid #ccc;
+            // border: 1px solid #ccc;
             cursor: pointer;
+            border-style: none;
         }
 
         .custom-dropdown .dropdown-display img {
