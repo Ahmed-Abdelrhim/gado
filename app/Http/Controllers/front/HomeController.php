@@ -489,8 +489,7 @@ class HomeController extends Controller
     public function countcart(Request $request)
     {
         $Cart = Cart::with('Order')->where('id', $request->id)->latest()->first();
-
-        $product = Product::where('id', $Cart->product_id)->latest()->first();
+        $product = Product::query()->where('id', $Cart->product_id)->latest()->first();
 
 
         //        $Cass = $Cart->count - $request->count ;

@@ -281,9 +281,17 @@
 @section('scripts')
 
     <script>
-        $(document).ready(function () {
-            var size = $('.quantity').length;
-            console.log(" Size => " + size);
+        $(document).ready(function() {
+            $(".input-number-decrement").each(function() {
+                var $this = $(this); // Current span element
+                var $input = $this.next("input"); // Corresponding input element
+
+                // console.log("Span text: => ", $this.text());
+                 valueOfInput = $input.val();
+                 if(valueOfInput <= 1 ) {
+                     $this.css("pointer-events" ,"none");
+                 }
+            });
         });
 
 
@@ -437,10 +445,12 @@
 
                         console.log("Increment Button  => " + currentQuantity);
 
-                        if (currentQuantity > 1 && $(".quantity" + id).css("pointer-events") === "none") {
+                        if (currentQuantity > 1 && $("span[data-id='" + id +"']").css("pointer-events") === "none") {
                             console.log("Yes I entered");
                             // $('attr')
-                            $(".quantity" + id).css("pointer-events", "");
+                            // $(".quantity" + id).css("pointer-events", "");
+                            // $("[data-id=id]").css("pointer-events", "");
+                            $("span[data-id='" + id +"']").css("pointer-events", "");
                         }
 
                         ++value;
