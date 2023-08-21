@@ -98,9 +98,9 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function newLanguageChange(string  $language)
+    public function newLanguageChange(string $language)
     {
-        if (!in_array($language,['en', 'ar'])) {
+        if (!in_array($language, ['en', 'ar'])) {
             return redirect()->back();
         }
         App::setLocale($language);
@@ -1334,31 +1334,23 @@ class HomeController extends Controller
 
     public function up()
     {
-        Config::set('app.app_maintenance', 'true');
-        Artisan::call('config:cache');
-        Artisan::call('cache:clear');
+        session()->put('app.maintenance.mode', 'false');
         return 'Application Now Is Restored Successfully';
-
-        // return config(['app.app_maintenance' => true]);
-        // return config('app.app_maintenance' , true);
-        //
-        // return Artisan::call('up');
     }
 
     public function down()
     {
-        return config('app.app_maintenance');
-        if (!config('app.app_maintenance')) {
-            return 'false';
-        }
-        return 'true';
-        // config('app_maintenance' , true);
-        // return 'Success Application Now Is On Maintenance Mode';
-        // return Artisan::call('down');
+        session()->put('app.maintenance.mode', 'true');
+        return 'Success Application Now Is On Maintenance Mode';
     }
 
     public function appMaintenance()
     {
         return 'App Is In Maintenance Mode';
+    }
+
+    public function play()
+    {
+        return session()->get('app.maintenance.mode');
     }
 }

@@ -1,24 +1,27 @@
 <?php
-
 namespace App\Http\Middleware;
-use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode as Middleware;
 
-class CustomMaintenanceMode extends Middleware
+use Closure;
+use Illuminate\Http\Request;
+
+class CustomMaintenanceMode
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-         if (env('CUSTOM_APP_MAINTENANCE')) {
-            return $next($request);
+        if (!session()->has('app.maintenance.mode')) {
+            session()->put('app.maintenance.mode', 'false');
         }
-        return redirect('app/maintenance');
+
+        if (session('app.maintenance.mode') == 'true') {
+            return redirect('app/maintenance');
+        }
+        return $next($request);
     }
 }
