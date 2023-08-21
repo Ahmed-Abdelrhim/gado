@@ -488,8 +488,6 @@ class HomeController extends Controller
 
     public function countcart(Request $request)
     {
-
-
         $Cart = Cart::with('Order')->where('id', $request->id)->latest()->first();
 
         $product = Product::where('id', $Cart->product_id)->latest()->first();
@@ -499,8 +497,11 @@ class HomeController extends Controller
         //        $product->stock = $product->stock - $Cass;
         //        $product->save();
 
+        if ($request->count <= 0) {
+            return response()->json(['error' => true, 'count' => $product->stock]);
+        }
 
-        if ($request->count > $product->stock) {
+        if ($request->count > $product->stock ) {
             return response()->json(['error' => true, 'count' => $product->stock]);
         } else {
             $Cart->count = $request->count;

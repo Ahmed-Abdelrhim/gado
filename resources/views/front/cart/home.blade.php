@@ -281,6 +281,12 @@
 @section('scripts')
 
     <script>
+        $(document).ready(function () {
+            var size = $('.quantity').length;
+            console.log(" Size => " + size);
+        });
+
+
         $(document).on('click', '.del', function () {
             var $ele = $(this).parent();
             var data = {
@@ -376,6 +382,14 @@
                         //  var value = el[0].value;
                         var id = $(this).data("id");
                         var value = $(".quantity" + id).val();
+                        var inputOfQuantity = $(".quantity" + id).val();
+                        var currentQuantity = parseInt(inputOfQuantity) - 1;
+
+
+                        if (currentQuantity <= 1) {
+                            console.log("Count Equals Zero Is Here " + currentQuantity);
+                            $(this).css("pointer-events", "none");
+                        }
 
                         --value;
                         // if(!min || value >= min) {
@@ -385,10 +399,8 @@
                         var data = {
                             id: id,
                             count: value,
-
                             _token: $("input[name='_token']").val()
                         }
-
 
                         $.ajax(
                             {
@@ -420,6 +432,16 @@
                         // }
                         var id = $(this).data("id");
                         var value = $(".quantity" + id).val();
+                        var inputOfQuantity = $(".quantity" + id).val();
+                        var currentQuantity = parseInt(inputOfQuantity) + 1;
+
+                        console.log("Increment Button  => " + currentQuantity);
+
+                        if (currentQuantity > 1 && $(".quantity" + id).css("pointer-events") === "none") {
+                            console.log("Yes I entered");
+                            // $('attr')
+                            $(".quantity" + id).css("pointer-events", "");
+                        }
 
                         ++value;
                         var data = {
