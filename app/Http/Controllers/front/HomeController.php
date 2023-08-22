@@ -494,7 +494,7 @@ class HomeController extends Controller
 
         //        $Cass = $Cart->count - $request->count ;
         //        $product->stock = $product->stock - $Cass;
-        //        $product->save();
+        //        $product->save();;
 
         if ($request->count <= 0) {
             return response()->json(['error' => true, 'count' => $product->stock]);
