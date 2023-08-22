@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Session;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Pro_Like;
 use App\Inbox;
 use App\Product_Category;
@@ -110,27 +110,27 @@ class HomeController extends Controller
 
     public function ser(Request $request, $div)
     {
-        $data = Division::where('id', $div)->with('Categories')->latest()->first();
+        $data = Division::query()->where('id', $div)->with('Categories')->latest()->first();
         if (Auth::guard('dealer')->check()) {
             $user_id = Auth::guard('dealer')->user()->id;
-            $order = Order::where('status', '1')->where('dealer_id', $user_id)->with('Carts')->latest()->first();
+            $order = Order::query()->where('status', '1')->where('dealer_id', $user_id)->with('Carts')->latest()->first();
 
 
         } elseif (Auth::guard('customer')->check()) {
             $user_id = Auth::guard('customer')->user()->id;
 
-            $order = Order::where('status', '1')->where('customer_id', $user_id)->with('Carts')->latest()->first();
+            $order = Order::query()->where('status', '1')->where('customer_id', $user_id)->with('Carts')->latest()->first();
 
 
         } else {
 
 
-            $order = Order::where('status', '1')->where('ip', $request->ip())->with('Carts')->latest()->first();
+            $order = Order::query()->where('status', '1')->where('ip', $request->ip())->with('Carts')->latest()->first();
 
         }
 
 
-        $pros = Product::where('stock', '>', 0)->where(function ($query) use ($request) {
+        $pros = Product::query()->where('stock', '>', 0)->where(function ($query) use ($request) {
             $query->where('name_ar', 'like', "%" . $request->search . "%");
             $query->orWhere('name_en', 'like', "%" . $request->search . "%");
         })->take(50)->with('ProComments')->latest()->get();
