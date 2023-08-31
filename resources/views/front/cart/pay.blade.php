@@ -63,6 +63,10 @@
         });
         </script>
 </head>
+
+
+
+
 <body class="
 @if(request()->segment(count(request()->segments())) == 1 || request()->segment(count(request()->segments()) -1 ) == 1) home_one @endif">
     <!-- START:: INFO SITE SECTION -->
@@ -82,7 +86,8 @@
     <script src="{{asset('dist/front/assets/js/bootstrap/popper.min.js')}}"></script>
     <script src="{{asset('dist/front/assets/js/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('dist/front/assets/js/bootstrap/bootstrap-range.js')}}"></script>
-<script src="{{asset('dist/js/my_code.js')}}"></script>
+    <script src="{{asset('dist/js/my_code.js')}}"></script>
+
     <!-- START::  -->
     <script>
       $( document ).ready(function() {

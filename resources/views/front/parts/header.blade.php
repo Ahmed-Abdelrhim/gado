@@ -40,13 +40,13 @@
                                         <a href="{{ route('newLangChange','ar')}}">
                                             <img src="{{asset('egypt.png')}}" alt="Image 1"
                                                  style="margin-left: 10px;margin-top: 4px;">
-                                            <span class="languageSpan"> 🇪🇬 العربية</span>
+                                            <span class="languageSpan">  العربية</span>
                                         </a>
                                     @else
                                         <a href="{{route('newLangChange','en')}}">
                                             <img src="{{asset('united-states.png')}}" alt="Image 2"
                                                  style="margin-left: 10px;margin-top: 4px;"/>
-                                            <span class="languageSpan">  English 🇪🇬 </span>
+                                            <span class="languageSpan">  English  </span>
                                         </a>
                                     @endif
                                 </div>
@@ -395,13 +395,13 @@
                                         <a href="{{ route('newLangChange','ar')}}" >
                                             <img src="{{asset('egypt.png')}}" alt="Image 1"
                                                  style="margin-left: 10px;margin-top: 4px;">
-                                            <span style="color: white" class="languageSpan"> 🇪🇬 العربية</span>
+                                            <span style="color: white" class="languageSpan">  العربية</span>
                                         </a>
                                     @else
                                         <a href="{{route('newLangChange','en')}}">
                                             <img src="{{asset('united-states.png')}}" alt="Image 2"
                                                  style="margin-left: 10px;margin-top: 4px;"/>
-                                            <span  style="color: white;" class="languageSpan">  English 🇪🇬 </span>
+                                            <span  style="color: white;" class="languageSpan">  English </span>
                                         </a>
                                     @endif
                                 </div>

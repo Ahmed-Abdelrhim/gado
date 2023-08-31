@@ -35,6 +35,8 @@ use DB;
 use Validator;
 use App\Governorate;
 use App\Services\HomeService;
+use Illuminate\Support\Facades\Http;
+
 
 class HomeController extends Controller
 {
@@ -611,9 +613,31 @@ class HomeController extends Controller
         ));
 
         $result = json_decode(curl_exec($ch));
-
-
         return view('front.cart.detial2', compact('data', 'order', 'setting', 'result'));
+    }
+
+    public function qnbPaymentIntegration(Request $request)
+    {
+        $order = Order::query()->where('id', $request->id)->with('Carts')->latest()->first();
+
+        if ($order['status'] > 1) {
+            return redirect(route('front_order_detial', [1, $request->id]));
+        }
+
+        $setting = Setting::query()->first();
+        $data = Category::query()->latest()->get();
+
+        $merchantId = 'TESTQNBAATEST001';
+        $password = '9c6a123857f1ea50830fa023ad8c8d1b';
+
+        $url = 'https://banquemisr.gateway.mastercard.com/api/rest/version/62/merchant/' . $merchantId . '/session';
+
+
+        $headers = array(
+            'Content-Type:application/json',
+            'Authorization: Basic ' . base64_encode('Merchant.' . $merchantId . ":" . $password) // <---
+        );
+
     }
 
 
@@ -775,8 +799,8 @@ class HomeController extends Controller
     {
 
         $id = $request->input("id");
-        $order = Order::where('id', $id)->with('Carts')->latest()->first();
-        $setting = Setting::first();
+        $order = Order::query()->where('id', $id)->with('Carts')->latest()->first();
+        $setting = Setting::query()->first();
 
         foreach ($order->Carts as $val) {
 
@@ -789,7 +813,7 @@ class HomeController extends Controller
             $prod->save();
 
             // Discount Stock after order complete.
-            $product = Product::where('id', $val->product_id)->latest()->first();
+            $product = Product::query()->where('id', $val->product_id)->latest()->first();
 
             $product->stock = $product->stock - $val->count;
 
@@ -798,7 +822,7 @@ class HomeController extends Controller
 
         }
 
-        $Cart = Cart::where('order_id', $request->id)->delete();
+        $Cart = Cart::query()->where('order_id', $request->id)->delete();
 
         $order->pay_type = 2;
         $order->status = 2;
@@ -1306,31 +1330,108 @@ class HomeController extends Controller
     public function CreateCheckoutSession(Request $request)
     {
         $id = $request->input("id");
-        $order = Order::where('id', $id)->with('Carts')->latest()->first();
+        $order = Order::query()->where('id', $id)->with('Carts')->latest()->first();
         $merchantId = 'GADO_COOL';
-        $password = '7b57cc84015c69f9602959ddcdb413d2';
-        $url = 'https://banquemisr.gateway.mastercard.com/api/rest/version/62/merchant/' . $merchantId . '/session';
-
-        $setting = Setting::first();
-        $headers = array(
-            'Content-Type:application/json',
-            'Authorization: Basic ' . base64_encode('Merchant.' . $merchantId . ":" . $password) // <---
-        );
+        // $password = '7b57cc84015c69f9602959ddcdb413d2';
+        // $url = 'https://banquemisr.gateway.mastercard.com/api/rest/version/62/merchant/' . $merchantId . '/session';
 
 
-        $url = $url;
+        // $testUrl = 'https://qnbalahli.test.gateway.mastercard.com/api/rest/version/67/merchant/TESTQNBAATEST001/session';
+        $url = 'https://qnbalahli.gateway.mastercard.com/api/rest/version/67/merchant/'. $merchantId .'/session';
 
-        $ch = curl_init($url);
-        curl_setopt_array($ch, array(
-            CURLOPT_POST => TRUE,
-            CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_HTTPHEADER => $headers,
-        ));
-        $result = json_decode(curl_exec($ch));
-        return view('front.cart.pay', compact('order', 'result', 'setting'));
+        $total = $order->total + $order->shipping;
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Basic ' . base64_encode('merchant.TESTQNBAATEST001:9c6a123857f1ea50830fa023ad8c8d1b'),
+            'Content-Type' => 'application/json',
+        ])
+            ->post( $url , [
+                "apiOperation" => "INITIATE_CHECKOUT",
+                "interaction" => [
+                    "timeout" => "1800",
+                    // "returnUrl" => "https://google.com",
+                    // "returnUrl" => 'http://127.0.0.1:8000/order-recpt-finish?id=' . $order->id . '&payment-type=success-payment',
+                    "returnUrl" => 'https://gadoeg.com/order-recpt-finish?id=' . $order->id . '&payment-type=success-payment',
+                    "operation" => "PURCHASE",
+                    "merchant" => [
+                        "name" => $merchantId,
+                    ],
+                ],
+                "order" => [
+                    "currency" => "EGP",
+                    "id" => $order->id,
+                    "reference" => "7361352a-b2b3-4c4f-954d-153322b867ne",
+                    "amount" => $total,
+                    "description" =>  '#' . $order->id ,
+                ],
+                "transaction" => [
+                    // "reference" => "QNBAA_TESTING_274",
+                    "reference" => "QNBAA_PAYMENT",
+                ],
+            ]);
+
+
+        // You can access the response's status code and body
+        $status = $response->status();  // HTTP status code
+        $result = $response->json();      // JSON response body
+
+        $setting = Setting::query()->first();
+        return view('front.cart.test', compact('order', 'result', 'setting'));
+
+        //        $headers = array(
+        //            'Content-Type:application/json',
+        //            'Authorization: Basic ' . base64_encode('Merchant.' . $merchantId . ":" . $password)
+        //        );
+        //
+        //
+        //        $url = $url;
+        //
+        //        $ch = curl_init($url);
+        //        curl_setopt_array($ch, array(
+        //            CURLOPT_POST => TRUE,
+        //            CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+        //            CURLOPT_CUSTOMREQUEST => "POST",
+        //            CURLOPT_RETURNTRANSFER => TRUE,
+        //            CURLOPT_HTTPHEADER => $headers,
+        //        ));
+        //        $result = json_decode(curl_exec($ch));
+        //        return $result;
+
+        // return view('front.cart.pay', compact('order', 'result', 'setting'));
     }
+
+
+//    public function CreateCheckoutSession(Request $request)
+//    {
+//        $id = $request->input("id");
+//        $order = Order::where('id', $id)->with('Carts')->latest()->first();
+//        $merchantId = 'GADO_COOL';
+//        $password = '7b57cc84015c69f9602959ddcdb413d2';
+//        $url = 'https://banquemisr.gateway.mastercard.com/api/rest/version/62/merchant/' . $merchantId . '/session';
+//
+//
+//        $setting = Setting::first();
+//        $headers = array(
+//            'Content-Type:application/json',
+//            'Authorization: Basic ' . base64_encode('Merchant.' . $merchantId . ":" . $password) // <---
+//        );
+//
+//
+//        $url = $url;
+//
+//        $ch = curl_init($url);
+//        curl_setopt_array($ch, array(
+//            CURLOPT_POST => TRUE,
+//            CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+//            CURLOPT_CUSTOMREQUEST => "POST",
+//            CURLOPT_RETURNTRANSFER => TRUE,
+//            CURLOPT_HTTPHEADER => $headers,
+//        ));
+//        $result = json_decode(curl_exec($ch));
+//
+//
+//        return view('front.cart.pay', compact('order', 'result', 'setting'));
+//    }
 
     public function up()
     {

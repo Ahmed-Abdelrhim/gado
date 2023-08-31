@@ -887,3 +887,13 @@ Route::post('admin/login', 'Auth\LoginController@login');
 Route::get('admin/logout', 'Auth\LoginController@logout')->name('logout');
 
 
+// Jamlia
+// omar.abdelazizz@gmail.com => 12345678
+
+// Gado
+// omar.abdelazizz@gmail.com  => 12345678
+
+
+// omar.abdellaziz.admin@gmail.com
+
+
