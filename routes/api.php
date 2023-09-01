@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\front\HomeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +61,15 @@ Route::get('favourites','api\ApiProductsController@favourites')->middleware('Cus
 Route::post('add-produt','api\ApidetProducController@order');
 Route::get('cart','api\ApidetProducController@cart');
 Route::post('count-cart','api\ApidetProducController@countcart');
+
+#Delete From Cart
 Route::post('delete-carts','api\ApidetProducController@Deleteorder');
+Route::post('delete-cart',  ['api\ApidetProducController@deleteItemFromCart'])->name('api.front_delete_cart');
+
+
+
+
+
 Route::post('detials-carts','api\ApidetProducController@cartdetial')->middleware('CustomerAuth');
 Route::post('finish-order','api\ApidetProducController@addorder')->middleware('CustomerAuth');
 Route::get('my-orders','api\ApidetProducController@myorders')->middleware('CustomerAuth');

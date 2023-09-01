@@ -926,8 +926,8 @@ class ApidetProducController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id'         => 'required',
-          
-          
+
+
         ]);
         
         foreach ((array) $validator->errors() as $value)
@@ -957,6 +957,87 @@ class ApidetProducController extends Controller
             'message'    => 'delete is done',
         ],200);
     }
+
+
+    public function deleteItemFromCart(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id'               => 'required',
+            'order_id'         => 'required',
+        ]);
+
+        foreach ((array) $validator->errors() as $value)
+        {
+            if(isset($value['id']))
+            {
+                $msg = 'Product ID Is Required';
+                return response()->json([
+                    'message'  => $msg,
+                    'status'    => 400,
+                ],400);
+            }
+
+            if(isset($value['order_id']))
+            {
+                $msg = 'Order ID Is Required';
+                return response()->json([
+                    'message'  => $msg,
+                    'status'    => 400,
+                ],400);
+            }
+        }
+
+
+        // $Cart = Cart::with('Order')->where('id', $request->id)->latest()->first();
+        $Cart = Cart::with('Order')
+            ->where('id', $request->id)
+            ->where('order_id', $request->order_id)
+            ->latest()
+            ->first();
+
+        return response()->json([
+            'status'    => 200,
+            'message'    => 'Product Deleted Successfully',
+        ],200);
+
+
+        // $order = Order::query()->where('id', $Cart->order_id)->where('status', '1')->with('Carts')->latest()->first();
+        $order = Order::query()->where('id', $request->order_id)->where('status', '1')->with('Carts')->latest()->first();
+
+        $Cart->delete();
+
+        $order->total = Cart::where('order_id', $order->id)->sum('price');
+        $order->save();
+
+        $Carts = Cart::where('order_id', $order->id)->get();
+
+        $setting = Setting::first();
+
+        $datas = count($Carts);
+
+        $total = $order->total - $setting->tax_rate;
+        if ($datas == '0') {
+            $order->delete();
+        }
+
+        return response()->json([
+            'status'    => 200,
+            'message'    => 'Product Deleted Successfully',
+        ],200);
+
+
+        // return response()->json(['datas' => $order->total, 'total' => $total, 'cat_count' => $datas] , 200);
+    }
+
+
+
+
+
+
+
+
+
+
 
     # home cart
     public function cartdetial(Request $request)

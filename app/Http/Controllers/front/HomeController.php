@@ -1342,7 +1342,7 @@ class HomeController extends Controller
         $total = $order->total + $order->shipping;
 
         $response = Http::withHeaders([
-            'Authorization' => 'Basic ' . base64_encode('merchant.TESTQNBAATEST001:9c6a123857f1ea50830fa023ad8c8d1b'),
+            'Authorization' => 'Basic ' . base64_encode('merchant.GADO_COOL:9c6a123857f1ea50830fa023ad8c8d1b'),
             'Content-Type' => 'application/json',
         ])
             ->post( $url , [
