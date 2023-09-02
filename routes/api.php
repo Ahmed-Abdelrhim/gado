@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\front\HomeController;
+use App\Http\Controllers\api\ApidetProducController;
+
+
 
 
 /*
@@ -64,7 +67,7 @@ Route::post('count-cart','api\ApidetProducController@countcart');
 
 #Delete From Cart
 Route::post('delete-carts','api\ApidetProducController@Deleteorder');
-Route::post('delete-cart',  ['api\ApidetProducController@deleteItemFromCart'])->name('api.front_delete_cart');
+Route::post('delete-cart-item',  [ApidetProducController::class,'deleteItemFromCart']);
 
 
 

@@ -31,7 +31,9 @@ use Date;
 use DB;
 use URL;
 use App\Http\Resources\productResource;
-use Validator;
+
+use Illuminate\Support\Facades\Validator;
+// use Validator;
 
 class ApidetProducController extends Controller
 {
@@ -961,9 +963,9 @@ class ApidetProducController extends Controller
 
     public function deleteItemFromCart(Request $request)
     {
+        // return response()->json(['message' => 'Yes']);
         $validator = Validator::make($request->all(), [
             'id'               => 'required',
-            'order_id'         => 'required',
         ]);
 
         foreach ((array) $validator->errors() as $value)
@@ -976,22 +978,10 @@ class ApidetProducController extends Controller
                     'status'    => 400,
                 ],400);
             }
-
-            if(isset($value['order_id']))
-            {
-                $msg = 'Order ID Is Required';
-                return response()->json([
-                    'message'  => $msg,
-                    'status'    => 400,
-                ],400);
-            }
         }
 
-
-        // $Cart = Cart::with('Order')->where('id', $request->id)->latest()->first();
         $Cart = Cart::with('Order')
             ->where('id', $request->id)
-            ->where('order_id', $request->order_id)
             ->latest()
             ->first();
 
@@ -1006,7 +996,7 @@ class ApidetProducController extends Controller
 
         $Cart->delete();
 
-        $order->total = Cart::where('order_id', $order->id)->sum('price');
+        $order->total = Cart::query()->where('order_id', $order->id)->sum('price');
         $order->save();
 
         $Carts = Cart::where('order_id', $order->id)->get();
