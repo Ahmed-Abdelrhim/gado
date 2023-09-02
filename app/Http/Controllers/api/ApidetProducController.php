@@ -46,6 +46,9 @@ class ApidetProducController extends Controller
         $data = Division::where('id',$request->header("section"))->with('Categories')->latest()->first();
 
         $sec = Product::with('ProComments.Dealer','ProComments.Customer','Images','ProTypes','Categories')->where('id',$id)->latest()->first();
+        // return response()->json(['data' => $sec], 200);
+
+
         $Pro_Comments = Pro_Comments::with('Dealer','Customer')->where('product_id',$id)->get();
         $majs = Product_Category::where('product_id' , $id)->pluck('category_id')->toArray();
         $datas = Product_Category::whereIn('category_id',$majs)->pluck('product_id')->toArray();
@@ -129,6 +132,9 @@ class ApidetProducController extends Controller
         $list['rate_num']    = count($sec->ProComments);
         $list['discount']    = round($praaa, 0);
         $list['price_new']   =round($price_new, 0);
+        // stock is here
+        $list['stock'] = $sec->stock;
+
         $list['fav']         = $fav;
 
         # likes item

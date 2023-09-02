@@ -607,12 +607,8 @@ class ApiProductsController extends Controller
                 }
                 $list['Categories'][$key]['id']          = $cat->id;
                 $list['Categories'][$key]['name']        = $name;
-            
-            
-    
             }
         }
-
 
         # favourites & card
         if(!is_null($request->header('Authorization'))){

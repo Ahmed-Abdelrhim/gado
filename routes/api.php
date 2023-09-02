@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\api\ApidetProducController;
-
+use App\Http\Controllers\api\ApiProductsController;
 
 
 
@@ -55,9 +55,15 @@ Route::post('change-password','api\ApiauthController@newpassword');
 //products
 Route::get('section','api\ApiProductsController@section');
 Route::get('best-seller','api\ApiProductsController@bestseller');
-Route::get('latest-products','api\ApiProductsController@latest');
-Route::get('filter-products','api\ApiProductsController@filter');
-Route::get('detials-product','api\ApidetProducController@detialsprod');
+
+Route::get('latest-products',[ApiProductsController::class,'latest']);
+
+
+Route::get('filter-products',[ApiProductsController::class,'filter']);
+
+Route::get('detials-product',[ApidetProducController::class,'detialsprod']);
+
+
 Route::post('add-comment','api\ApidetProducController@addcomment');
 Route::post('add-favourites','api\ApidetProducController@addfav')->middleware('CustomerAuth');
 Route::get('favourites','api\ApiProductsController@favourites')->middleware('CustomerAuth');
