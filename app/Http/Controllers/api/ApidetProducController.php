@@ -985,12 +985,6 @@ class ApidetProducController extends Controller
             ->latest()
             ->first();
 
-        return response()->json([
-            'status'    => 200,
-            'message'    => 'Product Deleted Successfully',
-        ],200);
-
-
         // $order = Order::query()->where('id', $Cart->order_id)->where('status', '1')->with('Carts')->latest()->first();
         $order = Order::query()->where('id', $request->order_id)->where('status', '1')->with('Carts')->latest()->first();
 
@@ -999,9 +993,9 @@ class ApidetProducController extends Controller
         $order->total = Cart::query()->where('order_id', $order->id)->sum('price');
         $order->save();
 
-        $Carts = Cart::where('order_id', $order->id)->get();
+        $Carts = Cart::query()->where('order_id', $order->id)->get();
 
-        $setting = Setting::first();
+        $setting = Setting::query()->first();
 
         $datas = count($Carts);
 
@@ -1014,20 +1008,8 @@ class ApidetProducController extends Controller
             'status'    => 200,
             'message'    => 'Product Deleted Successfully',
         ],200);
-
-
         // return response()->json(['datas' => $order->total, 'total' => $total, 'cat_count' => $datas] , 200);
     }
-
-
-
-
-
-
-
-
-
-
 
     # home cart
     public function cartdetial(Request $request)
