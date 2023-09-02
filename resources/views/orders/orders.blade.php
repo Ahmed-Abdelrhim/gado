@@ -19,7 +19,7 @@
                         <tr>
                             <th>#</th>
                             <th>رقم الشحنة</th>
-                            <th> أسم المنتج</th>
+                            {{--                                <th> أسم المنتج</th>    --}}
                             <th>السعر</th>
                             <th>الحالة</th>
                             <th>نوع الدفع</th>
@@ -28,33 +28,31 @@
                             <th>التحكم</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tfoot>
                         @foreach($Orders as $key => $value)
                             <tr>
                                 <td>
-                                    {{$key+1}}
+                                    {{$key + 1 }}
                                 </td>
 
                                 <td>
                                     {{$value->id}}
                                 </td>
 
-                                <td>
-                                    @if(count($value->OrderProducts) > 1)
-                                        @foreach($value->OrderProducts as $productKey => $product)
-                                            {{-- @php $colors = array('#dc3545','#007bff','#28a745'); $random = array_rand($colors,1); @endphp  --}}
-                                            <span>
-                                                ( {{ $productKey + 1 }} )
-                                                {{ $product->product->name_ar }}
-                                            </span>
-                                            <br/>
-                                        @endforeach
-                                    @else
-                                        {{ $value->OrderProducts[0]->product->name_ar }}
-                                    @endif
-
-
-                                </td>
+                                {{--                                    <td>--}}
+                                {{--                                        @if(count($value->OrderProducts) > 1)--}}
+                                {{--                                            @foreach($value->OrderProducts as $productKey => $product)--}}
+                                {{--                                                --}}{{-- @php $colors = array('#dc3545','#007bff','#28a745'); $random = array_rand($colors,1); @endphp  --}}
+                                {{--                                                <span>--}}
+                                {{--                                                    ( {{ $productKey + 1 }} )--}}
+                                {{--                                                    {{ $product->product->name_ar }}--}}
+                                {{--                                                </span>--}}
+                                {{--                                                <br/>--}}
+                                {{--                                            @endforeach--}}
+                                {{--                                        @else--}}
+                                {{--                                            {{ $value->OrderProducts[0]->product->name_ar }}--}}
+                                {{--                                        @endif--}}
+                                {{--                                    </td>--}}
 
                                 <td>
                                     {{$value->total}}

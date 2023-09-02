@@ -110,7 +110,10 @@ Route::group(['middleware' => ['web' , 'custom_maintenance' ]], function () {
     # save new password
     Route::post('save-new-password', 'front\user\auth\PasswordController@SaveNewPassword')->name('front.save_new_password');
 
-    Route::get('create-checkout-session', 'front\HomeController@CreateCheckoutSession');
+    // Route::get('create-checkout-session', 'front\HomeController@CreateCheckoutSession');
+    Route::get('create-checkout-session', [HomeController::class,'CreateCheckoutSession']);
+
+
     Route::get('cc', function () {
         return auth()->getDefaultDriver();
     });

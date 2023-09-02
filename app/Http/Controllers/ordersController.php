@@ -25,16 +25,17 @@ class ordersController extends Controller
         // ->with(['OrderProducts','OrderProducts.Product'])
         $Orders = Order::query()
             ->select('id','total','status','pay_type')
-            ->with([
-                'OrderProducts.Product' => function ($query) {
-                    $query->select('id','name_ar');
-                    // $query->select('id', 'name_en', 'name_ar');
-                    // ->withoutAppends(['card_image', 'categories_ids']);
-                }
-            ])
+            //            ->with([
+            //                'OrderProducts.Product' => function ($query) {
+            //                    $query->select('id','name_ar');
+            //                    // $query->select('id', 'name_en', 'name_ar');
+            //                    // ->withoutAppends(['card_image', 'categories_ids']);
+            //                }
+            //            ])
             ->where('pay_type', '!=', null)
             ->latest()
             ->get();
+
         return view('orders.orders', ['Orders' => $Orders]);
     }
 
