@@ -308,7 +308,8 @@ function send_mobile_sms($numbers, $msg)
 
     $fields = array(
         "Username" => "3lHAxtSS",
-        "Password" => "78a3e549b5cd45213fbea699b6addf315e85ac262c59da87f02ab6c040731272",
+        // "Password" => "78a3e549b5cd45213fbea699b6addf315e85ac262c59da87f02ab6c040731272",
+        "Password" => "1241750aedbdd0c64a018cbcf81f8b02521e235cfc3efa84ec7c07b213fe9d70",
         "message" => $msg,
         "mobile" => $numbers,
         "sender" => "7067fbcb5f341420f4190c0cdcd1a326cab982047c103f8d9e460f29900866e0",

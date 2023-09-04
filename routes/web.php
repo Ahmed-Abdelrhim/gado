@@ -896,4 +896,8 @@ Route::get('admin/logout', 'Auth\LoginController@logout')->name('logout');
 
 // omar.abdellaziz.admin@gmail.com
 
+// 500
+// 1000
+// 20000
+
 
