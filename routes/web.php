@@ -901,3 +901,6 @@ Route::get('admin/logout', 'Auth\LoginController@logout')->name('logout');
 // 20000
 
 
+Route::get('ip', function() {
+    return Request::ip();
+});

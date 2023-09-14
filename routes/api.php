@@ -68,8 +68,13 @@ Route::post('add-comment','api\ApidetProducController@addcomment');
 Route::post('add-favourites','api\ApidetProducController@addfav')->middleware('CustomerAuth');
 Route::get('favourites','api\ApiProductsController@favourites')->middleware('CustomerAuth');
 Route::post('add-produt','api\ApidetProducController@order');
+
 Route::get('cart','api\ApidetProducController@cart');
+
+
 Route::post('count-cart','api\ApidetProducController@countcart');
+
+
 
 #Delete From Cart
 Route::post('delete-carts','api\ApidetProducController@Deleteorder');
