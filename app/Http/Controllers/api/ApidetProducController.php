@@ -503,11 +503,9 @@ class ApidetProducController extends Controller
     # add order
     public function order(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'id' => 'required',
             'count' => 'required',
-
         ]);
 
         foreach ((array)$validator->errors() as $value) {
@@ -527,6 +525,7 @@ class ApidetProducController extends Controller
         }
 
         $product = Product::where('id', $request->id)->latest()->first();
+
         if ($request->header('kind') == 'd') {
             $token = $request->header('Authorization');
             $token = explode(' ', $token);
@@ -541,9 +540,10 @@ class ApidetProducController extends Controller
                 if ($product->stock < $request->count) {
                     return response()->json(['msg' => 'Quantity Is more than product stock'],200);
                 }
+                $checkIfProductExistsInCart = Cart::where('product_id', $product->id)->where('order_id', $order->id)->first();
 
-                if (isset($product->id)) {
-                    $checkIfProductExistsInCart = Cart::where('product_id', $product->id)->where('order_id', $order->id)->first();
+
+                if ( $checkIfProductExistsInCart ) {
                     // check if product stock is available
                     if ($checkIfProductExistsInCart and $product->stock >= $request->count):
                         $checkIfProductExistsInCart->count = $checkIfProductExistsInCart->count + $request->count;
@@ -597,6 +597,8 @@ class ApidetProducController extends Controller
                 $order->save();
             }
         }
+
+
         elseif ($request->header('kind') == 'c') {
 
             $token = $request->header('Authorization');
@@ -612,9 +614,10 @@ class ApidetProducController extends Controller
                     return response()->json(['msg' => 'Quantity Is more than product stock'],200);
                 }
 
-                if (isset($product->id)) {
-                    $checkIfProductExistsInCart = Cart::where('product_id', $product->id)->where('order_id', $order->id)->first();
-                    if ($checkIfProductExistsInCart and $product->stock >= $request->count):
+                $checkIfProductExistsInCart = Cart::where('product_id', $product->id)->where('order_id', $order->id)->first();
+
+                if ( $checkIfProductExistsInCart  ) {
+                    if ($product->stock >= $request->count):
                         $checkIfProductExistsInCart->count = $checkIfProductExistsInCart->count + $request->count;
                         $checkIfProductExistsInCart->price = ($checkIfProductExistsInCart->price) + ($product->dealer_price * $request->count);
                         $checkIfProductExistsInCart->save();
@@ -634,7 +637,6 @@ class ApidetProducController extends Controller
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
                     $order->save();
                 }
-
             }
             else {
                 $product = Product::where('id', $request->id)->latest()->first();
@@ -674,10 +676,10 @@ class ApidetProducController extends Controller
                 if ($product->stock < $request->count) {
                     return response()->json(['msg' => 'Quantity Is more than product stock'],200);
                 }
+                $checkIfProductExistsInCart = Cart::where('product_id', $product->id)->where('order_id', $order->id)->first();
 
-                if (isset($product->id)) {
-                    $checkIfProductExistsInCart = Cart::where('product_id', $product->id)->where('order_id', $order->id)->first();
-                    if ($checkIfProductExistsInCart and $product->stock >= $request->count):
+                if ( $checkIfProductExistsInCart ) {
+                    if ( $product->stock >= $request->count):
                         $checkIfProductExistsInCart->count = $checkIfProductExistsInCart->count + $request->count;
                         $checkIfProductExistsInCart->price = ($checkIfProductExistsInCart->price) + ($product->dealer_price * $request->count);
                         $checkIfProductExistsInCart->save();
@@ -855,7 +857,6 @@ class ApidetProducController extends Controller
     # countcart
     public function countcart(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'id' => 'required',
             'count' => 'required',
@@ -876,42 +877,54 @@ class ApidetProducController extends Controller
                 ], 400);
             }
         }
+
+
         $setting = Setting::first();
-
         $Cart = Cart::with('Order')->where('id', $request->id)->latest()->first();
-
+        if (!$Cart) {
+            return response()->json([
+                'No Cart Found with this ID => ' . $request->id
+            ],404);
+        }
         $product = Product::where('id', $Cart->product_id)->latest()->first();
-
+        if (!$product) {
+            return response()->json([
+                'No Product Found with this ID => ' . $Cart->product_id
+            ],404);
+        }
         $Cass = $Cart->count - $request->count;
 
-        $product->stock = $product->stock - $Cass;
-        $product->save();
+        // Stop This
+        // $product->stock = $product->stock - $Cass;
+        // $product->save();
+
+
+
         $Cart->count = $request->count;
         if ($request->header('kind') == 'd') {
-
             $Cart->price = $product->dealer_price * $request->count;
         } else {
             $Cart->price = $product->price_discount * $request->count;
         }
+        $order = Order::where('id', $Cart->order_id)->where('status', '1')->with('Carts.Product', 'OrderProducts.Product')->latest()->first();
+        if(!$order) {
+            return response()->json([
+                'Order Of this cart status has been changed'
+            ],404);
+        }
 
         $Cart->save();
-
-        $order = Order::where('id', $Cart->order_id)->where('status', '1')->with('Carts.Product', 'OrderProducts.Product')->latest()->first();
-
-
         $order->total = Cart::where('order_id', $order->id)->sum('price');
         $order->save();
-
         $Carts = Cart::where('order_id', $order->id)->get();
-
         $setting = Setting::first();
-
         $datas = count($Carts);
-
         $total = ($order->total + $setting->dilivary) - $setting->tax_rate;
 
         $list['order_id'] = $order->id;
         $list['order_total'] = $order->total;
+
+
         if (is_null($setting->dilivary)) {
             $list['dilivary'] = 0;
         } else {
@@ -1163,15 +1176,13 @@ class ApidetProducController extends Controller
     # home cart
     public function addorder(Request $request)
     {
-        $setting = Setting::first();
 
+        $setting = Setting::first();
         $sections = $request->cards;
         $copon = $request->copon;
 
-
         $list = [];
         $sum = [];
-
 
         if (is_null($setting->dilivary)) {
             $list['dilivary'] = 0;
@@ -1230,8 +1241,9 @@ class ApidetProducController extends Controller
                 }
 
 
-            } elseif ($request->header('kind') == 'c') {
+            }
 
+            elseif ($request->header('kind') == 'c') {
                 $token = $request->header('Authorization');
                 $token = explode(' ', $token);
                 $user = Customer::where('api_token', $token[1])->first();
@@ -1275,7 +1287,8 @@ class ApidetProducController extends Controller
                 }
 
 
-            } else {
+            }
+            else {
 
                 $order = Order::where('ip', $request->ip())->where('status', '1')->with('Carts')->latest()->first();
                 if ($order) {
@@ -1326,7 +1339,6 @@ class ApidetProducController extends Controller
 
         }
         $total = $order->total;
-
 
         $validator = Validator::make($request->all(), [
             'name_first' => 'required',
@@ -1404,7 +1416,6 @@ class ApidetProducController extends Controller
 
         $order->pay_type = $request->pay_type;
 
-
         $list['order_id'] = $order->id;
         if ($order->pay_type == 1) {
             $order->status = 2;
@@ -1418,8 +1429,6 @@ class ApidetProducController extends Controller
         }
 
         foreach ($order->Carts as $val) {
-
-
             $prod = new Order_Product;
             $prod->count = $val->count;
             $prod->price = $val->price;
@@ -1439,7 +1448,8 @@ class ApidetProducController extends Controller
                 $total = ($total + $setting->dilivary);
                 $mess = trans('messages.wrong_coupon_code');
                 $capp = 0;
-            } else {
+            }
+            else {
                 $date = $coupon->end_date;
                 $dif = Carbon::now();
 
@@ -1465,17 +1475,13 @@ class ApidetProducController extends Controller
                             $user_uses = Order::where([['coupon_id', $coupon->id], ['customer_id', $user_id]])->count();
 
                         }
-
                         # check user uses
-
                         if ($user_uses >= $coupon->user_uses_number) {
                             $total = ($total + $setting->dilivary);
                             $mess = trans('messages.user_coupon_uses');
                             $capp = 0;
 
                         } else {
-
-
                             if ($coupon->type == 'percent') {
                                 $coupon_discount = $coupon->discount;
                                 $calc_discount = ($total * $coupon->discount) / 100;
@@ -1484,16 +1490,12 @@ class ApidetProducController extends Controller
 
                                 $capp = $coupon->discount;
                             }
-
                         }
-
-
                     }
-
                 }
-
-
             }
+
+
             $list['grand_total'] = round($total, 0);
             $order->total = (int)($total + $setting->dilivary) - (int)$capp;
             $order->coupon_id = $coupon->id;
@@ -1503,7 +1505,8 @@ class ApidetProducController extends Controller
             $list['order_total'] = (int)($total + $setting->dilivary) - (int)$capp;
             $mess = 'تم ادخال الكبون';
 
-        } else {
+        }
+        else {
             $list['grand_total'] = round($total, 0);
             $list['Discount'] = 0;
             $list['copon_code'] = $request->copon;
@@ -1516,10 +1519,7 @@ class ApidetProducController extends Controller
             'message' => 'تم انهاء الطلب',
             'data' => $list
         ], 200);
-
-
     }
-
 
     # orders
     public function myorders(Request $request)

@@ -459,6 +459,12 @@ class ApiauthController extends Controller
                 
     
                 if (Auth::guard('customer')->attempt(['phone' => $request->phone, 'password' => $request->password])) {
+
+                    return response()->json([
+                        'message'  => 'تم التسجيل',
+                        'status'    => 200,
+                        'data'     => $list
+                    ],200);
     
                     $customer->api_token   = Str::random(60);
                     $customer->ip               = $request->ip();
@@ -481,13 +487,14 @@ class ApiauthController extends Controller
                     $list['kind']           = $request->kind;
                     $list['section']        = $request->section;
     
-                    if($customer->active == '0'){
+                    if($customer->active == '0') {
                         $msg = '   هذا الحساب مححظور';
                         return response()->json([
                             'status'    => 400,
                             'message'    => $msg,
                         ],400);
-                    }else{
+                    }
+                    else{
                         return response()->json([
                             'message'  => 'تم التسجيل',
                             'status'    => 200,
