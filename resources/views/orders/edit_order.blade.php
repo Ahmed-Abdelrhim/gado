@@ -129,10 +129,14 @@
                                         @php
 
 
-                                            if($ord->shipping !="" ){
+                                            if($ord->shipping != ""  ){
                                                   $shipping = $ord->shipping;
-                                            }else{
+                                            } else {
+                                                if(!empty($ord->Order_info->governorate_id )) {
                                                 $shipping = (isset($ord->Order_info)  && $ord->Order_info->governorate_id != null) ? \App\Governorate::find($ord->Order_info->governorate_id)->shipping_fee : 0 ;
+                                                } else {
+                                                    $shipping = $setting->dilivary;
+                                                }
                                             }
                                         @endphp
                                         <li class="list-group-item d-flex justify-content-between align-items-center">

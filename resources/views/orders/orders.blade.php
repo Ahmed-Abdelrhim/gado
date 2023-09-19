@@ -55,7 +55,7 @@
                                 {{--                                    </td>--}}
 
                                 <td>
-                                    {{$value->total}}
+                                    {{ $value->total +  $value->shipping }}
                                 </td>
 
                                 <td>

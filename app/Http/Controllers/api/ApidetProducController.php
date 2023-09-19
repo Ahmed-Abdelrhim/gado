@@ -1098,7 +1098,6 @@ class ApidetProducController extends Controller
     public function cartdetial(Request $request)
     {
         $setting = Setting::first();
-
         $sections = $request->cards;
         $copon = $request->copon;
 
@@ -1247,6 +1246,10 @@ class ApidetProducController extends Controller
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
                     $order->save();
 
+                    // put shipping from setting because the gove_id is not specified
+                    $order->shipping = $setting->dilivary;
+                    $order->save();
+
                 }
 
                 else {
@@ -1269,6 +1272,10 @@ class ApidetProducController extends Controller
 
                     $order = Order::where('id', $order->id)->where('status', '1')->with('Carts')->latest()->first();
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
+                    $order->save();
+
+                    // put shipping from setting because the gove_id is not specified
+                    $order->shipping = $setting->dilivary;
                     $order->save();
 
                 }
@@ -1295,6 +1302,10 @@ class ApidetProducController extends Controller
 
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
                     $order->save();
+
+                    // put shipping from setting because the gove_id is not specified
+                    $order->shipping = $setting->dilivary;
+                    $order->save();
                 }
                 else {
                     $order = new Order;
@@ -1317,6 +1328,10 @@ class ApidetProducController extends Controller
                     $order = Order::where('id', $order->id)->where('status', '1')->with('Carts')->latest()->first();
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
                     $order->save();
+
+                    // put shipping from setting because the gove_id is not specified
+                    $order->shipping = $setting->dilivary;
+                    $order->save();
                 }
             }
 
@@ -1333,6 +1348,10 @@ class ApidetProducController extends Controller
                     //                    $product->stock = $product->stock - $cat['count'];
                     //                    $product->save();
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
+                    $order->save();
+
+                    // put shipping from setting because the gove_id is not specified
+                    $order->shipping = $setting->dilivary;
                     $order->save();
                 }
                 else {
@@ -1358,6 +1377,10 @@ class ApidetProducController extends Controller
                     $order = Order::where('id', $order->id)->where('status', '1')->with('Carts')->latest()->first();
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
                     $order->save();
+
+                    // put shipping from setting because the gove_id is not specified
+                    $order->shipping = $setting->dilivary;
+                    $order->save();
                 }
 
 
@@ -1367,7 +1390,9 @@ class ApidetProducController extends Controller
             $Carts = Cart::where('order_id', $order->id)->get();
             $datas = count($Carts);
         }
+
         $total = $order->total;
+
 
         $validator = Validator::make($request->all(), [
             'name_first' => 'required',
@@ -1469,8 +1494,15 @@ class ApidetProducController extends Controller
 
         $Cart = Cart::where('order_id', $order->id)->delete();
 
-        $order->total = Order_Product::where('order_id', $order->id)->sum('price');
-        $order->save();
+        if(!empty($setting->dilivary)) {
+            // $order->total = Order_Product::where('order_id', $order->id)->sum('price') + (int)($setting->dilivary);
+            // $order->save();
+        } else {
+            $order->total = Order_Product::where('order_id', $order->id)->sum('price');
+            $order->save();
+        }
+
+
 
         if (!is_null($copon)) {
             $coupon = Coupon::where('code', $request->copon)->first();
