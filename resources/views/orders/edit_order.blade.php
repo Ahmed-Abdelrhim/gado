@@ -230,10 +230,10 @@
                         </div>
                         <div class="col-sm-12">
                             <div class="card card-primary card-outline">
-                            {{--  <div class="card-header">
-                              <h5 class="m-0" style="display: inline;">قائمة الطلبات</h5>
-                            </div>  --}}
-                            <!-- /.card-header -->
+                                {{--  <div class="card-header">
+                                  <h5 class="m-0" style="display: inline;">قائمة الطلبات</h5>
+                                </div>  --}}
+                                <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="example1" class="table table-bordered table-hover table-striped">
                                         <thead>
@@ -262,11 +262,9 @@
                                                 <td>{{ $val->Product->price}}</td>
                                                 <td>{{$val->count}}</td>
                                                 <td>{{ $val->Product->stock}}</td>
-
-
                                             </tr>
                                         @endforeach
-                                        </tfoot>
+                                        </tbody>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
@@ -300,6 +298,8 @@
             var output = document.getElementById('avatar');
             output.src = URL.createObjectURL(event.target.files[0]);
         };
+
+
 
 
     </script>

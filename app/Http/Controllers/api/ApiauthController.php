@@ -60,22 +60,22 @@ class ApiauthController extends Controller
             send_mobile_sms($numbers, $msg);
             $customer->save();
 
-        }elseif($request->kind == 'd'){
+        }
+
+        elseif($request->kind == 'd'){
             $validator = Validator::make($request->all(), [
                 'active_phone'        => 'required|unique:dealers,phone',
             ]);
-
             foreach ((array) $validator->errors() as $value)
             {
-                if(isset($value['active_phone']) && is_null($request->active_phone))
-                {
+                if(isset($value['active_phone']) && is_null($request->active_phone)) {
                     $msg = 'phone is required';
                     return response()->json([
                         'message'  => null,
                         'error'    => $msg,
                     ],400);
-                }elseif(isset($value['active_phone']) && !is_null($request->active_phone))
-                {
+                }
+                elseif( isset($value['active_phone']) && !is_null($request->active_phone) ) {
                     $msg = 'phone is already exist';
                     return response()->json([
                         'message'  => null,

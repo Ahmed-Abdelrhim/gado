@@ -545,6 +545,15 @@ class ApidetProducController extends Controller
 
                 if ( $checkIfProductExistsInCart ) {
                     // check if product stock is available
+                    if (!empty($checkIfProductExistsInCart->count)) {
+                        $userWantedQuantity = $checkIfProductExistsInCart->count + $request->count;
+                        $ProductCurrentQuantity = $product->stock;
+                        if ( $ProductCurrentQuantity < $userWantedQuantity ) {
+                            // Return To The User With A Response Because He Wants Quantity More Than In The Stock
+                            return response()->json(['msg' => 'User Wants Quantity more than product stock'],200);
+                        }
+                    }
+
                     if ($checkIfProductExistsInCart and $product->stock >= $request->count):
                         $checkIfProductExistsInCart->count = $checkIfProductExistsInCart->count + $request->count;
                         $checkIfProductExistsInCart->price = ($checkIfProductExistsInCart->price) + ($product->dealer_price * $request->count);
@@ -552,7 +561,6 @@ class ApidetProducController extends Controller
                         $order->total = Cart::where('order_id', $order->id)->sum('price');
                         $order->save();
                     endif;
-
                 } else {
                     // Adding Order To Cart
                     $Cart = new Cart;
@@ -617,6 +625,17 @@ class ApidetProducController extends Controller
                 $checkIfProductExistsInCart = Cart::where('product_id', $product->id)->where('order_id', $order->id)->first();
 
                 if ( $checkIfProductExistsInCart  ) {
+
+                    if (!empty($checkIfProductExistsInCart->count)) {
+                        $userWantedQuantity = $checkIfProductExistsInCart->count + $request->count;
+                        $ProductCurrentQuantity = $product->stock;
+                        if ( $ProductCurrentQuantity < $userWantedQuantity ) {
+                            // Return To The User With A Response Because He Wants Quantity More Than In The Stock
+                            return response()->json(['msg' => 'User Wants Quantity more than product stock'],200);
+                        }
+                    }
+
+
                     if ($product->stock >= $request->count):
                         $checkIfProductExistsInCart->count = $checkIfProductExistsInCart->count + $request->count;
                         $checkIfProductExistsInCart->price = ($checkIfProductExistsInCart->price) + ($product->dealer_price * $request->count);
@@ -679,6 +698,18 @@ class ApidetProducController extends Controller
                 $checkIfProductExistsInCart = Cart::where('product_id', $product->id)->where('order_id', $order->id)->first();
 
                 if ( $checkIfProductExistsInCart ) {
+
+                    if (!empty($checkIfProductExistsInCart->count)) {
+                        $userWantedQuantity = $checkIfProductExistsInCart->count + $request->count;
+                        $ProductCurrentQuantity = $product->stock;
+                        if ( $ProductCurrentQuantity < $userWantedQuantity ) {
+                            // Return To The User With A Response Because He Wants Quantity More Than In The Stock
+                            return response()->json(['msg' => 'User Wants Quantity more than product stock'],200);
+                        }
+                    }
+
+
+
                     if ( $product->stock >= $request->count):
                         $checkIfProductExistsInCart->count = $checkIfProductExistsInCart->count + $request->count;
                         $checkIfProductExistsInCart->price = ($checkIfProductExistsInCart->price) + ($product->dealer_price * $request->count);
@@ -1176,7 +1207,6 @@ class ApidetProducController extends Controller
     # home cart
     public function addorder(Request $request)
     {
-
         $setting = Setting::first();
         $sections = $request->cards;
         $copon = $request->copon;
@@ -1202,21 +1232,24 @@ class ApidetProducController extends Controller
                 $order = Order::where('dealer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
 
                 if ($order) {
-                    $product = Product::where('id', $cat['price'])->latest()->first();
-                    $Cart = new Cart;
-                    $Cart->count = $cat['count'];
-                    $Cart->price = $product->dealer_price * (int)$cat['count'];
-                    $Cart->product_id = $product->id;
-                    $Cart->order_id = $order->id;
-                    $Cart->save();
-                    $product->stock = $product->stock - $cat['count'];
-                    $product->save();
+                    // $product = Product::where('id', $cat['price'])->latest()->first();
+                    // Stop This
+                    //                    $product = Product::where('id', $cat['id'])->latest()->first();
+                    //                    $Cart = new Cart;
+                    //                    $Cart->count = $cat['count'];
+                    //                    $Cart->price = $product->dealer_price * (int)$cat['count'];
+                    //                    $Cart->product_id = $product->id;
+                    //                    $Cart->order_id = $order->id;
+                    //                    $Cart->save();
+                    //                    $product->stock = $product->stock - $cat['count'];
+                    //                    $product->save();
 
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
-
                     $order->save();
 
-                } else {
+                }
+
+                else {
                     $order = new Order;
                     $order->dealer_id = $user_id;
                     $order->status = 1;
@@ -1239,8 +1272,6 @@ class ApidetProducController extends Controller
                     $order->save();
 
                 }
-
-
             }
 
             elseif ($request->header('kind') == 'c') {
@@ -1251,19 +1282,21 @@ class ApidetProducController extends Controller
                 $user_id = $user->id;
                 $order = Order::where('customer_id', $user_id)->where('status', '1')->with('Carts')->latest()->first();
                 if ($order) {
-                    $product = Product::where('id', $cat['id'])->latest()->first();
-                    $Cart = new Cart;
-                    $Cart->count = $cat['count'];
-                    $Cart->price = $product->price_discount * (int)$cat['count'];
-                    $Cart->product_id = $product->id;
-                    $Cart->order_id = $order->id;
-                    $Cart->save();
-                    $product->stock = $product->stock - $cat['count'];
-                    $product->save();
+                    // Stop This
+                    //                    $product = Product::where('id', $cat['id'])->latest()->first();
+                    //                    $Cart = new Cart;
+                    //                    $Cart->count = $cat['count'];
+                    //                    $Cart->price = $product->price_discount * (int)$cat['count'];
+                    //                    $Cart->product_id = $product->id;
+                    //                    $Cart->order_id = $order->id;
+                    //                    $Cart->save();
+                    //                    $product->stock = $product->stock - $cat['count'];
+                    //                    $product->save();
 
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
                     $order->save();
-                } else {
+                }
+                else {
                     $order = new Order;
                     $order->customer_id = $user_id;
                     $order->status = 1;
@@ -1285,27 +1318,24 @@ class ApidetProducController extends Controller
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
                     $order->save();
                 }
-
-
             }
-            else {
 
+            else {
                 $order = Order::where('ip', $request->ip())->where('status', '1')->with('Carts')->latest()->first();
                 if ($order) {
-                    $product = Product::where('id', $cat['id'])->latest()->first();
-                    $Cart = new Cart;
-                    $Cart->count = $cat['count'];
-                    $Cart->price = $product->price_discount * $cat['count'];
-                    $Cart->product_id = $product->id;
-                    $Cart->order_id = $order->id;
-                    $Cart->save();
-                    $product->stock = $product->stock - $cat['count'];
-                    $product->save();
-
-
+                    //                    $product = Product::where('id', $cat['id'])->latest()->first();
+                    //                    $Cart = new Cart;
+                    //                    $Cart->count = $cat['count'];
+                    //                    $Cart->price = $product->price_discount * $cat['count'];
+                    //                    $Cart->product_id = $product->id;
+                    //                    $Cart->order_id = $order->id;
+                    //                    $Cart->save();
+                    //                    $product->stock = $product->stock - $cat['count'];
+                    //                    $product->save();
                     $order->total = Cart::where('order_id', $order->id)->sum('price');
                     $order->save();
-                } else {
+                }
+                else {
                     $order = new Order;
                     $order->ip = $request->ip();
                     $order->status = 1;
@@ -1336,18 +1366,17 @@ class ApidetProducController extends Controller
             $product->save();
             $Carts = Cart::where('order_id', $order->id)->get();
             $datas = count($Carts);
-
         }
         $total = $order->total;
 
         $validator = Validator::make($request->all(), [
             'name_first' => 'required',
             'name_last' => 'required',
-            'email' => 'required',
             'phone' => 'required',
-            'email_code' => 'required',
             'address' => 'required',
-            'desc' => 'required',
+            'email' => 'nullable',
+            'email_code' => 'nullable',
+            'desc' => 'nullable',
             'pay_type' => 'required',
         ]);
 
@@ -1422,7 +1451,8 @@ class ApidetProducController extends Controller
             $order->save();
             $list['order_pay'] = 'Cash on Delivery';
             $list['link_pay'] = '';
-        } else {
+        }
+        else {
             $order->save();
             $list['order_pay'] = 'credit card';
             $list['link_pay'] = URL::to('create-checkout-session?id=' . $order->id);
@@ -1438,6 +1468,7 @@ class ApidetProducController extends Controller
         }
 
         $Cart = Cart::where('order_id', $order->id)->delete();
+
         $order->total = Order_Product::where('order_id', $order->id)->sum('price');
         $order->save();
 
@@ -1459,18 +1490,20 @@ class ApidetProducController extends Controller
                     $capp = 0;
 
 
-                } else {
+                }
+                else {
                     if ($coupon->total_uses_number == 0) {
                         $total = ($total + $setting->dilivary);
                         $mess = trans('messages.total_coupon_uses');
                         $capp = 0;
 
-                    } else {
-
+                    }
+                    else {
                         if ($request->header('kind') == 'd') {
                             $user_id = session('customer')->id;
                             $user_uses = Order::where([['coupon_id', $coupon->id], ['dealer_id', $user_id]])->count();
-                        } elseif ($request->header('kind') == 'c') {
+                        }
+                        elseif ($request->header('kind') == 'c') {
                             $user_id = session('customer')->id;
                             $user_uses = Order::where([['coupon_id', $coupon->id], ['customer_id', $user_id]])->count();
 
@@ -1481,7 +1514,8 @@ class ApidetProducController extends Controller
                             $mess = trans('messages.user_coupon_uses');
                             $capp = 0;
 
-                        } else {
+                        }
+                        else {
                             if ($coupon->type == 'percent') {
                                 $coupon_discount = $coupon->discount;
                                 $calc_discount = ($total * $coupon->discount) / 100;

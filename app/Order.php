@@ -29,8 +29,13 @@ class Order extends Model
         return Order_info::where('order_id',$this->id)->first();
     }
     
-      public function Order_info()
+//      public function Order_info()
+//    {
+//        return $this->belongsTo(Order_info::class , 'order_id','id');
+//    }
+
+    public function Order_info()
     {
-        return $this->belongsTo(Order_info::class);
+        return $this->hasOne(Order_info::class , 'order_id','id');
     }
 }

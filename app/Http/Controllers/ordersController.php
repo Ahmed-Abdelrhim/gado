@@ -42,8 +42,9 @@ class ordersController extends Controller
     # edit
     public function Edit($id)
     {
-        // return 'Edit Is Here';
-        $ord = Order::query()->where('id', $id)->with('OrderProducts.Product', 'Order_info')->latest()->firstOrFail();
+        return $ord = Order::where('id', $id)->with('OrderProducts.Product', 'Order_info')->latest()->firstOrFail();
+        // $orderInfo = Order_info::where('order_id', $ord->id)->latest()->first();
+
         $setting = Setting::query()->first();
         return view('orders.edit_order', compact('ord', 'setting'));
     }
