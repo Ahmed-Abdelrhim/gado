@@ -890,3 +890,6 @@ Route::get('admin/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('ip', function() {
     return Request::ip();
 });
+
+
+// feature/making-dynamic-token
