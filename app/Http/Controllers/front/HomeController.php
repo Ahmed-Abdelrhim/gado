@@ -582,17 +582,24 @@ class HomeController extends Controller
 
 
             return redirect(route('front_order_detial', [1, $request->id]));
-//            if ( $order['status']  == 2){
-//                return  "طلبك تم الدفع من";
-//            }
+            //            if ( $order['status']  == 2){
+            //                return  "طلبك تم الدفع من";
+            //            }
 
         }
 
         $setting = Setting::first();
         $data = Category::latest()->get();
 
-        $merchantId = 'GADO_COOL';
-        $password = '7b57cc84015c69f9602959ddcdb413d2';
+        // $merchantId = 'GADO_COOL';
+        $merchantId = 'GADO';
+
+
+        // $password = '7b57cc84015c69f9602959ddcdb413d2';
+        $password = '8ecc426315cfdd788f8a9b6f965334b0';
+
+
+        // $url = 'https://banquemisr.gateway.mastercard.com/api/rest/version/62/merchant/' . $merchantId . '/session';
         $url = 'https://banquemisr.gateway.mastercard.com/api/rest/version/62/merchant/' . $merchantId . '/session';
 
 
@@ -1332,21 +1339,36 @@ class HomeController extends Controller
         $id = $request->input("id");
         $order = Order::query()->where('id', $id)->with('Carts')->latest()->first();
         // $merchantId = 'GADO_COOL';
-        $merchantId = 'TESTQNBAATEST001';
+        
+        // $merchantId = 'TESTQNBAATEST001';
+        $merchantId = 'GADO';
+
 
 
         // $password = '7b57cc84015c69f9602959ddcdb413d2';
         // $url = 'https://banquemisr.gateway.mastercard.com/api/rest/version/62/merchant/' . $merchantId . '/session';
 
+        // this is the old one
+        // $url = 'https://qnbalahli.test.gateway.mastercard.com/api/rest/version/67/merchant/'. $merchantId . '/session';
 
-        $url = 'https://qnbalahli.test.gateway.mastercard.com/api/rest/version/67/merchant/'. $merchantId . '/session';
-        // $url = 'https://qnbalahli.gateway.mastercard.com/api/rest/version/67/merchant/'. $merchantId .'/session';
+        $url = 'https://qnbalahli.gateway.mastercard.com/api/rest/version/67/merchant/'. $merchantId .'/session';
 
         $total = $order->total + $order->shipping;
+        
+        
+        // $password = 'Qnb@123';
+        $password = '8ecc426315cfdd788f8a9b6f965334b0';
+
+
+        // User Name : 01151263677
+        // Password  :  Aa1494
 
         $response = Http::withHeaders([
             // 'Authorization' => 'Basic ' . base64_encode('merchant.GADO_COOL:9c6a123857f1ea50830fa023ad8c8d1b'),
-            'Authorization' => 'Basic ' . base64_encode('merchant.TESTQNBAATEST001:9c6a123857f1ea50830fa023ad8c8d1b'),
+
+            // this is the old one
+            // 'Authorization' => 'Basic ' . base64_encode('merchant.TESTQNBAATEST001:9c6a123857f1ea50830fa023ad8c8d1b'),
+            'Authorization' => 'Basic ' . base64_encode('merchant.GADO:8ecc426315cfdd788f8a9b6f965334b0'),
             'Content-Type' => 'application/json',
         ])
             ->post( $url , [
@@ -1354,8 +1376,8 @@ class HomeController extends Controller
                 "interaction" => [
                     "timeout" => "1800",
                     // "returnUrl" => "https://google.com",
-                    "returnUrl" => 'http://127.0.0.1:8000/order-recpt-finish?id=' . $order->id . '&payment-type=success-payment',
-                    // "returnUrl" => 'https://gadoeg.com/order-recpt-finish?id=' . $order->id . '&payment-type=success-payment',
+                    // "returnUrl" => 'http://127.0.0.1:8000/order-recpt-finish?id=' . $order->id . '&payment-type=success-payment',
+                    "returnUrl" => 'https://gadoeg.com/order-recpt-finish?id=' . $order->id . '&payment-type=success-payment',
                     "operation" => "PURCHASE",
                     "merchant" => [
                         "name" => $merchantId,
@@ -1363,11 +1385,11 @@ class HomeController extends Controller
                 ],
                 "order" => [
                     "currency" => "EGP",
-                    "id" => $order->id,
+                    "id" => $order->id . rand(10000, 99999),
                     "reference" => "7361352a-b2b3-4c4f-954d-153322b867ne",
                     "amount" => $total,
-                    // "description" =>  '#' . $order->id . rand(1111,9999) ,
-                    "description" =>  '#' . $order->id ,
+                    "description" =>  '#' . $order->id . rand(1111,9999) ,
+                    // "description" =>  '#' . $order->id ,
                 ],
                 "transaction" => [
                     // "reference" => "QNBAA_TESTING_274",
@@ -1375,6 +1397,7 @@ class HomeController extends Controller
                 ],
             ]);
 
+        // return $response;
 
         // You can access the response's status code and body
         $status = $response->status();    // HTTP status code

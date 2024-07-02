@@ -25,6 +25,7 @@ Route::get('home','api\ApiHomeController@home');
 Route::post('edit-profile','api\ApiHomeController@editprofile')->middleware('CustomerAuth');
 Route::post('edit-profile-password','api\ApiHomeController@editprofilepassword')->middleware('CustomerAuth');
 Route::get('about-us','api\ApiHomeController@about');
+
 Route::get('terms-an-conditions','api\ApiHomeController@terms');
 
 Route::get('governorates',function (){

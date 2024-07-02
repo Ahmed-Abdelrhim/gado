@@ -904,3 +904,38 @@ Route::get('admin/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('ip', function() {
     return Request::ip();
 });
+
+
+
+// https://www.seenapay.com/pr/pay?token=6681948f2bb88
+
+
+
+// testing
+// token
+// 66811d7fb556b
+// https://dev-api.seenapay.com/payment-requests/pay?token=66811d7fb556b
+
+
+// http://127.0.0.1:8000/payment-requests/pay?token=66811d7fb556b
+
+
+
+// http://127.0.0.1:8000/payment-requests/pay?token=6681981dab8c1
+
+
+
+// to be tested
+// https://dev-api.seenapay.com/payment-requests/pay?token=66811d7fb666b
+
+
+
+// super_admin@app.com production password
+// $2y$10$VVR1buJkYFipKlzLH3/Bbu3bawc3OJaT0gWM8JDteBxBc8K0s1SrG
+// 1 => 8 :  $2y$10$r401PSFrhH.uzSpTpmxE7uOSz1lZOh7pJreuKVPkAfzoSwQOmx.xu
+
+
+//http://95.217.95.29:8015/web#id=3848&menu_id=109&cids=1&ac-tion=174&active_id=17&model=project.task&view_type=form
+
+
+// http://95.217.95.29:8015/web#id=3857&menu_id=109&cids=1&ac-tion=174&active_id=17&model=project.task&View_type=form

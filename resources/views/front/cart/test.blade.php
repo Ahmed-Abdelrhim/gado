@@ -20,17 +20,17 @@
     <!-- START:: FAVICON -->
 
     <!-- START: Test Script -->
-    <script src="https://qnbalahli.test.gateway.mastercard.com/static/checkout/checkout.min.js"
+    {{-- <script src="https://qnbalahli.test.gateway.mastercard.com/static/checkout/checkout.min.js"
             data-error="errorCallback"
             data-cancel="cancelCallback">
-    </script>
+    </script> --}}
     <!-- END: Test Script -->
 
     <!-- START: Production Script -->
-    {{--    <script src="https://qnbalahli.gateway.mastercard.com/static/checkout/checkout.min.js"--}}
-    {{--            data-error="errorCallback"--}}
-    {{--            data-cancel="cancelCallback">--}}
-    {{--    </script>--}}
+       <script src="https://qnbalahli.gateway.mastercard.com/static/checkout/checkout.min.js"
+               data-error="errorCallback"
+               data-cancel="cancelCallback">
+        </script>
     <!-- END: Production Script -->
 
     <script type="text/javascript">
